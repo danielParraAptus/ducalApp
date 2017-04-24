@@ -1,0 +1,28 @@
+<ion-view ng-init="ServicioEncuestasVerCtrl">
+    <ion-nav-bar class="bar-positive" align-title="center">
+        <ion-nav-buttons>
+            <a href="#/servicio-encuestas"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i></a>
+        </ion-nav-buttons>
+        <ion-nav-title><a menu-toggle="right"><img style="width: auto; height: 40px;" src="img/icono.png"/></a></ion-nav-title>
+        <ion-nav-buttons side="right">
+            <a href="#/menu"><i class="fa fa-bars" aria-hidden="true"></i></a>
+        </ion-nav-buttons>
+    </ion-nav-bar>
+    <ion-content>
+        <div class="contenedor">
+            <center><h2>Votación de la Encuesta</h2></center>
+            <center><h3>{{pregunta}}</h3></center>
+             <form>
+                <center><table id="tablaVerVotacion" ng-repeat="dato in datos">
+                    <tr>
+                        <td colspan="2" class="rawOne">{{dato.respuesta}}</td>
+                    </tr>
+                    <tr>
+                        <td class="rawTwo">{{dato.contadorVotos}} votos</td>
+                        <td class="rawThree">{{dato.porcentaje}} <div class="divYes"><div class="divYes2"><div id="divContador{{dato.posicion}}" ng-style="dato.estilo"></div></div></div></td>
+                    </tr>
+                </table></center>
+            </form>
+        </div>
+    </ion-content>
+</ion-view>

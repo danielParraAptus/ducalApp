@@ -1,0 +1,62 @@
+<ion-view>
+    <ion-nav-bar class="bar-positive" align-title="center">
+        <ion-nav-buttons>
+            <a href="#/servicio-tren"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i></a>
+        </ion-nav-buttons>
+        <ion-nav-title><a menu-toggle="right"><img style="width: auto; height: 40px;" src="img/icono.png"/></a></ion-nav-title>
+        <ion-nav-buttons side="right">
+            <a href="#/menu"><i class="fa fa-bars" aria-hidden="true"></i></a>
+        </ion-nav-buttons>
+    </ion-nav-bar>
+    <ion-content>
+        <div class="contenedor">
+            <center><h2>Horarios para el dia: {{newDate | date:'dd MMMM yyyy'}}</h2></center>
+
+            <a ng-click="mostrarLn()">
+                <div id="btnLn" class="solapa">
+                    LN > MAD
+                </div>
+            </a>
+            <a id="aLn" ng-click="mostrarMad()">
+                <div id="btnMad" class="solapa">
+                    MAD > LN
+                </div>
+            </a>
+<br>
+<br>
+            <div id="MadLn">
+                <div class="title">
+                    <center><p>Madrid (Chamartín) -> Las Navas </p></center>
+                </div>
+            
+                <div class="contenedor_solapas">
+                    <table id="tablaMadLn">
+                        <tr>
+                            <th>ID</th>
+                            <th>Salida</th>
+                            <th>Llegada</th>
+                            <th>Duración</th>
+                        </tr>			
+                    </table>
+                </div>
+            </div>
+
+            <div id="LnMad">
+                <div class="title">
+                    <center><p>Las Navas -> Madrid (Chamartín)</p></center>
+                </div>
+            
+                <div class="contenedor_solapas">
+                    <table id="tablaLnMad">
+                        <tr>
+                            <th>ID</th>
+                            <th>Salida</th>
+                            <th>Llegada</th>
+                            <th>Duración</th>
+                        </tr>			
+                    </table>
+                </div>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

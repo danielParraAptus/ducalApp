@@ -1,0 +1,43 @@
+<ion-view>
+    <ion-nav-bar class="bar-positive" align-title="center">
+        <ion-nav-buttons>
+            <a href="#/menu"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i></a>
+        </ion-nav-buttons>
+        <ion-nav-title><a menu-toggle="right"><img style="width: auto; height: 40px;" src="img/icono.png"/></a></ion-nav-title>
+        <ion-nav-buttons side="right">
+            <a href="#/menu"><i class="fa fa-bars" aria-hidden="true"></i></a>
+        </ion-nav-buttons>
+    </ion-nav-bar>
+    <ion-content>
+        <div class="contenedor">
+            <center><h2>Hemeroteca</h2></center>
+            <div id="divTeatro">
+                <div id="tituloTeatro" ng-click="mostrarContenido(0)"><i id="iconoTeatro" style="float: left" class="fa fa-chevron-circle-down" aria-hidden="true"></i>Teatro</div>
+                <div id="contenidoTeatro">
+                    <div class="itemTeatro">
+                        <p>Opera 2016</p>
+                        <p><a href="https://goo.gl/photos/JuQtemQbCiULYvEbA">https://goo.gl/photos/JuQtemQbCiULYvEbA</a></p>
+                    </div>
+                    <div class="itemTeatro">
+                        <p>Variedades 2016</p>
+                        <p><a href="https://www.youtube.com/playlist?list=PLFdk-vqMBDUg_emhkV7m7BBdvTCdPyZ0F">https://www.youtube.com/playlist?list=PLFdk-vqMBDUg_emhkV7m7BBdvTCdPyZ0F</a></p>
+                    </div>
+                </div>
+                <div id="tituloGaleria" ng-click="mostrarContenido(1)"><i id="iconoGaleria" style="float: left" class="fa fa-chevron-circle-down" aria-hidden="true"></i>Galería</div>
+                <div id="contenidoGaleria">
+                    <div class="itemGaleria">
+                        <p>Fotos Verano 2016</p>
+                        <p><a href="https://goo.gl/photos/Qhyv9qhFECPtr8BS7">https://goo.gl/photos/Qhyv9qhFECPtr8BS7</a></p>
+                    </div>
+                    <div class="itemGaleria">
+                        <p>Las mismas 2016</p>
+                        <p><a href="https://goo.gl/photos/Qhyv9qhFECPtr8BS7">https://goo.gl/photos/Qhyv9qhFECPtr8BS7</a></p>
+                    </div>
+                </div>
+            </div>
+            <div id="divGalería">
+
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

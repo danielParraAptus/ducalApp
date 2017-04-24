@@ -1,0 +1,26 @@
+<ion-view>
+    <ion-nav-bar class="bar-positive" align-title="center">
+        <ion-nav-buttons>
+            <a href="#/servicios"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i></a>
+        </ion-nav-buttons>
+        <ion-nav-title><a menu-toggle="right"><img style="width: auto; height: 40px;" src="img/icono.png"/></a></ion-nav-title>
+        <ion-nav-buttons side="right">
+            <a href="#/menu"><i class="fa fa-bars" aria-hidden="true"></i></a>
+        </ion-nav-buttons>
+    </ion-nav-bar>
+    <ion-content>
+        <div class="contenedor">
+            <center><h2>Selección de horario</h2></center>
+            <p>¿De qué día quiere ver los horarios?</p>
+            <span>Fecha:</span>
+            <div class="seleccion_horario"><input type="text" id="labelFecha" name="seleccione_dia" value="{{onezoneDatepicker.date | date:'dd MMMM yyyy'}}"></div>
+            <onezone-datepicker datepicker-object="onezoneDatepicker">
+                <button class="button button-block button-outline button-positive show-onezone-datepicker boton-fecha">
+                   <i class="fa fa-calendar" aria-hidden="true"></i>
+                </button>
+            </onezone-datepicker>
+
+            <button class="botoncito" ng-click="buscarTrenes()">Consultar</button>
+        </div>
+    </ion-content>
+</ion-view>

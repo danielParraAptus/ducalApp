@@ -1,0 +1,28 @@
+<ion-view>
+    <ion-nav-bar class="bar-positive" align-title="center">
+        <ion-nav-buttons>
+            <a href="#/menu"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i></a>
+        </ion-nav-buttons>
+        <ion-nav-title><a menu-toggle="right"><img style="width: auto; height: 40px;" src="img/icono.png"/></a></ion-nav-title>
+        <ion-nav-buttons side="right">
+            <a href="#/menu"><i class="fa fa-bars" aria-hidden="true"></i></a>
+        </ion-nav-buttons>
+    </ion-nav-bar>
+    <ion-content>
+        <div class="contenedor">
+            <center><h2>Fiestas</h2></center>
+            <table id="tablaFiestas" ng-repeat="dato in datos">
+                <tr ng-if="dato.fecha != 'none'">
+                    <th class="negrita" ng-if="dato.diaSemana == 'Sábado' || dato.diaSemana == 'Domingo'">{{dato.diaSemana}}</th>
+                    <th ng-if="dato.diaSemana != 'Sábado' && dato.diaSemana != 'Domingo'">{{dato.diaSemana}}</th>
+                    <th colspan="2">{{dato.fecha}}</th>
+                </tr>
+                <tr>
+                    <td>{{dato.hora}}</td>
+                    <td>{{dato.titulo}}</td>
+                    <td>{{dato.lugar}}</td>
+                </tr>
+            </table>
+        </div>
+    </ion-content>
+</ion-view>
