@@ -1,0 +1,22 @@
+<ion-view>
+    <ion-nav-bar class="bar-positive" align-title="center">
+        <ion-nav-buttons>
+            <a href="#/anuncios"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i></a>
+        </ion-nav-buttons>
+        <ion-nav-title><a menu-toggle="right"><img style="width: auto; height: 40px;" src="img/icono.png"/></a></ion-nav-title>
+        <ion-nav-buttons side="right">
+            <a href="#/menu"><i class="fa fa-bars" aria-hidden="true"></i></a>
+        </ion-nav-buttons>
+    </ion-nav-bar>
+    <ion-content>
+        <div class="contenedor">
+            <center><h2>Anuncio</h2></center>
+            <div >
+                <p>{{datos.nombre}} {{datos.apellido2}}</p>
+                <p>{{datos.fecha}} - {{datos.hora}}</p>
+                <center><h2>{{datos.titulo}}</h2></center>
+                <p ng-bind-html="datos.contenido"></p>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>
