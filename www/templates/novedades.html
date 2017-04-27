@@ -9,19 +9,33 @@
         </ion-nav-buttons>
     </ion-nav-bar>
     <ion-content>
-        <div class="contenedor">
-            <center><h2>Novedades</h2></center>
-            <h3>Próximas fiestas</h3>
+        <div class="contenedor novedades">
+
+		
+            <center><h2>Novedades</h2>
+			
+			<div class="caja_resultados mitad negativo">
+				<div class="icono"><i class="fa fa-flag" aria-hidden="true"></i></div>
+				<div class="opcion_resultados"><p> Próximas fiestas</p></div>
+			</div>			
+
             <div>
                 <table id="tablaFiestasNovedades">
                 </table>
             </div>
 
-            <h3>Últimas novedades</h3>
+			<div class="caja_resultados mitad negativo">
+				<div class="icono"><i class="fa fa-exclamation-circle" aria-hidden="true"></i></div>
+				<div class="opcion_resultados"><p> Últimas Novedades</p></div>
+			</div>
             <p>No hay ninguna novedad</p>
 
-            <h3>Meteorología</h3>
+			<div class="caja_resultados mitad negativo">
+				<div class="icono"><i class="fa fa-sun-o" aria-hidden="true"></i></div>
+				<div class="opcion_resultados"><p> Meteorología</p></div>
+			</div>
             <div id="cont_50a8c69ed82db38603dddd2843bf82b3"><script type="text/javascript" src="https://www.tiempo.com/wid_loader/50a8c69ed82db38603dddd2843bf82b3"></script></div>
-        </div>
+        </center>
+		</div>
     </ion-content>
 </ion-view>

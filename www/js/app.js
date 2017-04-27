@@ -5,8 +5,9 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'onezone-datepicker',
-    'starter.controllers', 
+angular.module('starter', ['ionic', 
+    'onezone-datepicker',
+    'starter.controllers',
     'starter.services'])
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -134,7 +135,21 @@ angular.module('starter', ['ionic', 'onezone-datepicker',
     templateUrl: 'templates/hemeroteca.html',
     controller: 'HemerotecaCtrl'
   })
-  
+  .state('condiciones-legales', {
+    url: '/condiciones-legales',
+    templateUrl: 'templates/condiciones-legales.html',
+    controller: 'CondicionesLegalesCtrl'
+  })
+  .state('recover-passwd', {
+    url: '/recover-passwd',
+    templateUrl: 'templates/recover-passwd.html',
+    controller: 'RecoverPasswdCtrl'
+  })
+  .state('solicitud-alta', {
+    url: '/solicitud-alta',
+    templateUrl: 'templates/solicitud-alta.html',
+    controller: 'SolicitudAltaCtrl'
+  })
   ;
 
   // if none of the above states are matched, use this as the fallback

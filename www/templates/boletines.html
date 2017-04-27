@@ -11,11 +11,14 @@
     <ion-content>
         <div class="contenedor">
             <center><h2>Boletines</h2></center>
-            <table id="tablaBoletines">
+            <table id="tablaBoletinescab">
                 <tr>
-                    <th class="negrita">Fecha</th>
-                    <th class="negrita">Título</th>
-                </tr>
+                    <th class="negrita primero">Fecha</th>
+                    <th class="negrita ultimo">Título</th>
+                </tr>			
+			</table>
+			
+            <table id="tablaBoletines">
                 <tr ng-repeat="dato in datos" ng-click="mandarBoletines({{dato.id}})">
                     <td class="negrita">{{dato.fecha}}</td>
                     <td>{{dato.titulo}}</td>

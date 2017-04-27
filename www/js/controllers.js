@@ -154,9 +154,9 @@ var app = angular.module('starter.controllers', []);
         localStorage.setItem('pantallaAnterior','#/servicios');  
     }
 
-  })
+  });
    /////////////////////////////////////////////
-  .controller('ServicioCartaCtrl', function($scope) {
+  app.controller('ServicioCartaCtrl', function($scope) {
     $scope.$on('$ionicView.enter', function(){
         console.log('Estoy en ServicioCartaCtrl');
     });
@@ -785,34 +785,6 @@ var app = angular.module('starter.controllers', []);
               algo.fecha = str_fecha;
 
               arrayObj.push(algo);
-              /*if(localStorage.getItem('fechaFiestas') == str_fecha){
-                document.getElementById('tablaFiestas').innerHTML += '<tr>' +
-                  '<td>' + hora + ':' + otro + '</td>' + 
-                  '<td>' + titulo + '</td>' +
-                  '<td>' + lugar + '</td>' + 
-                  '</tr>	';
-              }else{
-                localStorage.setItem('fechaFiestas', str_fecha);
-                if(diaSemana == 'Sábado' || diaSemana == 'Domingo'){
-                    document.getElementById('tablaFiestas').innerHTML += '<tr>' +
-                      '<th class="negrita">' + diaSemana + '</th>' + 
-                      '<th>' +  str_fecha + '</th>' + 
-                      '<th></th>' + 
-                      '</tr>	';
-                }else{
-                    document.getElementById('tablaFiestas').innerHTML += '<tr>' +
-                      '<th>' + diaSemana + '</th>' + 
-                      '<th>' +  str_fecha + '</th>' + 
-                      '<th></th>' + 
-                      '</tr>	';
-                }
-                
-                document.getElementById('tablaFiestas').innerHTML += '<tr>' +
-                  '<td>' + hora + ':' + otro + '</td>' + 
-                  '<td>' + titulo + '</td>' +
-                  '<td>' + lugar + '</td>' + 
-                  '</tr>	';
-              }*/
               
             }
 
@@ -1067,6 +1039,68 @@ var app = angular.module('starter.controllers', []);
         }
     }
   });
+//////////////////////////////////////////////////////
+  app.controller('CondicionesLegalesCtrl', function($scope, $state, Peticiones) {
+    $scope.$on('$ionicView.enter', function(){
+        console.log('Estoy en CondicionesLegalesCtrl');
+        var remember = localStorage.getItem('rememberMe');
+        console.log('El remember es: ' + remember);
+        mostrarCondiciones(remember);
+    });
+
+    function mostrarCondiciones(token){
+        $.when(Peticiones.GetCondicionesLegales(token)).done(function(devuelto, data , data2){
+            var respuesta = data2.responseText;
+            var parser = new DOMParser();
+            var xmlDoc = parser.parseFromString(respuesta,"text/xml");
+            var devuelto = xmlDoc.getElementsByTagName("return")[0].childNodes[0].nodeValue;
+
+            document.getElementById('divCondiciones').innerHTML = devuelto;
+        });
+    }
+
+    $scope.aceptarCondiciones = function(){
+        var token = localStorage.getItem('rememberMe');
+        $.when(Peticiones.AcceptCondicionesLegales(token)).done(function(devuelto, data , data2){
+            var respuesta = data2.responseText;
+            var parser = new DOMParser();
+            var xmlDoc = parser.parseFromString(respuesta,"text/xml");
+            var devuelto = xmlDoc.getElementsByTagName("return")[0].childNodes[0].nodeValue;
+
+            switch(devuelto){
+                case 'true':
+                    $state.go('novedades');
+                    break;
+                case 'false':
+                    $state.go('login');
+                    break;
+            }
+        });
+    }
+
+  });
+  //////////////////////////////////////////////////////
+  app.controller('RecoverPasswdCtrl', function($scope, $state, Peticiones) {
+      $scope.$on('$ionicView.enter', function(){
+          console.log('Estoy en RecoverPasswdCtrl');
+          var remember = localStorage.getItem('rememberMe');
+          console.log('El remember es: ' + remember);
+      });
+
+  });
+  //////////////////////////////////////////////////////
+  app.controller('SolicitudAltaCtrl', function($scope, $state, Peticiones) {
+      $scope.$on('$ionicView.enter', function(){
+          console.log('Estoy en SolicitudAltaCtrl');
+
+      });
+
+      $scope.mandarSolicitud = function(){
+          
+              
+      }
+
+  });
 
   function comprobarStatus(Peticiones, $scope, $state, token){
       $.when(Peticiones.GetStatusUser(token)).done(function(devuelto, data , data2){
@@ -1083,8 +1117,8 @@ var app = angular.module('starter.controllers', []);
                 break;
               case '1':
                 console.log('Al usuario le falta por aceptar los terminos y condiciones');
-                //localStorage.setItem('rememberMe', token);
-                //$state.go('condiciones');
+                localStorage.setItem('rememberMe', token);
+                $state.go('condiciones-legales');
                 break;
               case '2':
                 console.log('El usuario tiene que cambiar la contraseña');

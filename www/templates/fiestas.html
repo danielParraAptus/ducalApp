@@ -12,6 +12,7 @@
         <div class="contenedor">
             <center><h2>Fiestas</h2></center>
             <table id="tablaFiestas" ng-repeat="dato in datos">
+
                 <tr ng-if="dato.fecha != 'none'">
                     <th class="negrita" ng-if="dato.diaSemana == 'Sábado' || dato.diaSemana == 'Domingo'">{{dato.diaSemana}}</th>
                     <th ng-if="dato.diaSemana != 'Sábado' && dato.diaSemana != 'Domingo'">{{dato.diaSemana}}</th>

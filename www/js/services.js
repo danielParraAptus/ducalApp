@@ -475,6 +475,103 @@ angular.module('starter.services', [])
                   console.log('EL req es: ' + req);
               }  
           })
+      },
+      GetCondicionesLegales: function (rememberme) {
+          var url = BaseUrl;
+          var soapRequest =
+            '<?xml version="1.0" encoding="utf-8"?> \
+            <soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:ws="http://ws/">\
+              <soap:Header/> \
+              <soap:Body> \
+                <ws:getTerminosYCondiciones>\
+                  <arg0>' + rememberme + '</arg0> \
+               </ws:getTerminosYCondiciones> \
+              </soap:Body> \
+            </soap:Envelope>';
+
+            return $.ajax({
+              type: "POST",
+              url: url,
+              contentType: "text/xml",
+              dataType: "xml",
+              data: soapRequest,
+              success: function(data, status, req) {
+                  console.log('Entro en success en GetCondicionesLegales ' );
+              },
+              error: function processError(data, status, req) {
+                  console.log('Entro en error en GetCondicionesLegales ' );
+                  console.log('EL data es: ' + JSON.stringify(data));
+                  console.log('EL status es: ' + status);
+                  console.log('EL req es: ' + req);
+              }  
+          })
+      },
+      AcceptCondicionesLegales: function (rememberme) {
+          var url = BaseUrl;
+          var soapRequest =
+            '<?xml version="1.0" encoding="utf-8"?> \
+            <soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:ws="http://ws/">\
+              <soap:Header/> \
+              <soap:Body> \
+                <ws:aceptarTerminosYCondiciones>\
+                  <arg0>' + rememberme + '</arg0> \
+               </ws:aceptarTerminosYCondiciones> \
+              </soap:Body> \
+            </soap:Envelope>';
+
+            return $.ajax({
+              type: "POST",
+              url: url,
+              contentType: "text/xml",
+              dataType: "xml",
+              data: soapRequest,
+              success: function(data, status, req) {
+                  console.log('Entro en success en GetCondicionesLegales ' );
+              },
+              error: function processError(data, status, req) {
+                  console.log('Entro en error en GetCondicionesLegales ' );
+                  console.log('EL data es: ' + JSON.stringify(data));
+                  console.log('EL status es: ' + status);
+                  console.log('EL req es: ' + req);
+              }  
+          })
+      },
+      RegistrarSolicitudAlta: function (nombre, apellido1, apellido2, correo1, correo2) {
+          var url = BaseUrl;
+          var soapRequest =
+            '<?xml version="1.0" encoding="utf-8"?> \
+            <soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:ws="http://ws/">\
+              <soap:Header/> \
+              <soap:Body> \
+                <ws:registerSolicitudAlta>\
+                  <arg0>' + nombre + '</arg0> \
+                  <arg1>' + apellido1 + '</arg1> \
+                  <arg2>' + apellido2 + '</arg2> \
+                  <arg3>' + correo1 + '</arg3> \
+                  <arg4>' + correo2 + '</arg4> \
+               </ws:registerSolicitudAlta> \
+              </soap:Body> \
+            </soap:Envelope>';
+
+            return $.ajax({
+              type: "POST",
+              url: url,
+              contentType: "text/xml",
+              dataType: "xml",
+              data: soapRequest,
+              success: function(data, status, req) {
+                  console.log('Entro en success en GetCondicionesLegales ' );
+                  console.log('EL data es: ' + JSON.stringify(data));
+                  console.log('EL status es: ' + status);
+                  console.log('EL req es: ' + req);
+              },
+              error: function processError(data, status, req) {
+                  console.log('Entro en error en GetCondicionesLegales ' );
+                  console.log('EL data es: ' + JSON.stringify(data));
+                  console.log('EL status es: ' + status);
+                  console.log('EL req es: ' + req);
+              }  
+          })
       }
 
     };

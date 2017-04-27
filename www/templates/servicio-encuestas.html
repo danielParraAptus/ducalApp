@@ -9,7 +9,7 @@
         </ion-nav-buttons>
     </ion-nav-bar>
     <ion-content>
-        <div class="contenedor">
+        <div class="contenedor ServicioEncuestas">
             <center><h2>Encuestas</h2></center>
 
             <a ng-click="mostrarActivas()">
@@ -31,32 +31,32 @@
             
                 <div class="contenedor_solapas">
                     <table id="tablaActiva">
-                        <tr>
+                        <!--<tr>
                             <th></th>
                             <th></th>
                             <th></th>
                             <th></th>
-                        </tr>
+                        </tr>-->
                         <tr>
                             <th>Fecha Creación</th>
                             <th>Fecha Expiración</th>
-                            <th colspan="2">Pregunta</th>
+                            <th colspan="2">Pregunta Encuesta</th>
                         </tr>
                         <table ng-repeat="dato in datos" class="tablaEncuesta">
-                            <tr>
+                            <!--<tr>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                            </tr>
+                            </tr>-->
                             <tr>
                                 <td>{{dato.fechaCreacion}}</td>
                                 <td>{{dato.fechaFin}}</td>
-                                <td colspan="2">{{dato.pregunta}}</td>
+                                <td colspan="2"><span>{{dato.pregunta}}</span></td>
                             </tr>
                             <tr>
                                 <td colspan="2" ng-click="verVotacion({{dato.id}})"><button class="btnEncuesta">Ver encuesta</button></td>
-                                <td colspan="2" ng-if="dato.votado == 'false'" ng-click="mandarVotacion({{dato.id}})"><button class="btnEncuesta">Votar encuesta</button></td>
+                                <td colspan="2" ng-if="dato.votado == 'false'" ng-click="mandarVotacion({{dato.id}})"><button class="btnEncuesta">Votar</button></td>
                                 <td colspan="2" ng-if="dato.votado == 'true'" style="color: red">Ya ha votado</td>
                             </tr>
                             <tr class="lineaSeparacion"></tr>
@@ -87,7 +87,7 @@
                             <tr>
                                 <td>{{dato.fechaCreacion}}</td>
                                 <td>{{dato.fechaFin}}</td>
-                                <td colspan="2">{{dato.pregunta}}</td>
+                                <td colspan="2"><span>{{dato.pregunta}}</span></td>
                             </tr>
                             <tr>
                                 <td colspan="4" ng-click="verVotacion({{dato.id}})"><button class="btnEncuesta">Ver encuesta</button></td>

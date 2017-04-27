@@ -13,10 +13,10 @@
             <center><h2>Anuncio</h2></center>
             <div class="contenedorRaro">
                 <div>
-                    <p>{{datos.nombre}} {{datos.apellido2}}</p>
-                    <p>{{datos.fecha}} - {{datos.hora}}</p>
-                    <h2>{{datos.titulo}}</h2>
-                    <p ng-bind-html="datos.contenido"></p>
+                    <p class="DatosNombre">{{datos.nombre}} {{datos.apellido2}}</p>
+                    <p class="DatosFecha">{{datos.fecha}} - {{datos.hora}}</p>
+                    <h2 class="DatosTitulo">{{datos.titulo}}</h2>
+                    <p class="DatosContenido" ng-bind-html="datos.contenido"></p>
                 </div>
             </div>
         </div>

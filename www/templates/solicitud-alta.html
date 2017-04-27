@@ -1,0 +1,45 @@
+<ion-view>
+    <ion-nav-bar class="bar-positive" align-title="center">
+        <ion-nav-buttons>
+            <a href="#/login"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i></a>
+        </ion-nav-buttons>
+        <ion-nav-title><a menu-toggle="right"><img style="width: auto; height: 40px;" src="img/icono.png"/></a></ion-nav-title>
+    </ion-nav-bar>
+    <ion-content>
+        <div class="contenedor">
+            <center><h2>Solicitud de Alta</h2></center>
+            <div id="divCondiciones"></div>
+            <form name="registro" novalidate>
+                <label>Nombre: </label>
+                <input type="text"  style="border: 1px solid #007000;" ng-model="model.nombre" name="nombre" ng-maxlength="50" ng-minlength="3" required/>
+
+                <!-- -->
+                <label ng-if="registro.nombre.$modelValue != '' &&  registro.nombre.$error.required && registro.nombre.$error.minlength && registro.nombre.$error.maxlength" style="color: red">Este campo es incorrecto</label>
+                <br>
+                <!-- -->
+
+                <label>Correo: </label>
+                <input type="email"  style="border: 1px solid #007000;" ng-model="model.correo" name="correo" required/>
+
+                <!-- -->
+                <label ng-if="registro.correo.$error.required || registro.correo.$error.email" style="color: red">Este campo es incorrecto</label>
+                <br>
+                <!-- -->
+
+                <label>Repite el correo: </label>
+                <input type="email"  style="border: 1px solid #007000;" ng-model="model.correo2" name="correo2" required/>
+
+                <!-- -->
+                <label ng-if="registro.correo2.$error.required || registro.correo2.$error.email" style="color: red">Este campo es incorrecto</label>
+                <br>
+                <!-- -->
+
+                {{registro.nombre.$modelValue}}
+
+
+
+                <button class="botoncito" ng-click="mandarSolicitud()" type="button">Solicitar</button>
+            </form>
+        </div>
+    </ion-content>
+</ion-view>
