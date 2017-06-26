@@ -1,6 +1,6 @@
 {
-  "name": "DucalApp",
-  "short_name": "DucalApp",
+  "name": "AusapeApp",
+  "short_name": "AusapeApp",
   "start_url": "index.html",
   "display": "standalone",
   "icons": [{

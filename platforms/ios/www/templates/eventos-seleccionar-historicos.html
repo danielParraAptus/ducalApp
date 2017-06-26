@@ -1,0 +1,39 @@
+<ion-view>
+    <ion-nav-bar align-title="center">
+        <ion-nav-buttons>
+           <div><a href="#/eventos" class="btnAtras"><i class="fa fa-arrow-left" aria-hidden="true"></i></a></div>
+        </ion-nav-buttons>
+        <ion-nav-title><a class="btnAtras"><img style="width: auto; height: 40px;" src="img/logoAusape.png"/></a></ion-nav-title>
+        <ion-nav-buttons side="right">
+        </ion-nav-buttons>
+    </ion-nav-bar>
+    <ion-content>
+        <div class="seleccione_fecha">
+            <center><h2>{{translateView('EVENTS-SELECT-DATE')}}</h2></center>
+            <form name="eventForm" novalidate>
+                <label>{{translateView('EVENTS-SELECT-MONTH')}}</label>
+                <select id="selectHistorico">
+                    <option value="1">Enero</option>
+                    <option value="2">Febrero</option>
+                    <option value="3">Marzo</option>
+                    <option value="4">Abril</option>
+                    <option value="5">Mayo</option>
+                    <option value="6">Junio</option>
+                    <option value="7">Julio</option>
+                    <option value="8">Agosto</option>
+                    <option value="9">Septiembre</option>
+                    <option value="10">Octubre</option>
+                    <option value="11">Noviembre</option>
+                    <option value="12">Diciembre</option>
+                </select>
+                <label>{{translateView('EVENTS-SELECT-YEAR')}}</label>
+                <input name="year" ng-model="model.year" id="selectYear" type="number" maxlength="4" ng-minlength="4" placeholder="{{translateView('EVENTS-CALENDAR-PLACEHOLDER')}}" required>
+
+                <button class="boton_menu_modal" ng-if="eventForm.year.$valid" ng-click="fijarMesHistorico()">{{translateView('SELECT-BUTTON')}}</button>
+            </form>		
+        </div>
+    </ion-content>
+    <ion-footer-bar class="hide-on-keyboard-open">
+        <div class="pie interiores"></div>
+    </ion-footer-bar>
+</ion-view>

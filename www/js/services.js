@@ -1,97 +1,115 @@
 angular.module('starter.services', [])
   //DEV
-  .constant('BaseUrl', 'https://ducalapp.com/ducalApp/ws/ducalAppWS?wsdl')
+    .constant('BaseUrl', 'http://desarrollo.ausape.com/ServiciosMovil/servidor.php?wsdl')
+    //.constant('BaseUrl', 'http://176.16.1.3:8061/servidor.php?wsdl')
+    //.constant('BaseUrl', 'http://localhost/ServiciosAusape/servidor.php?wsdl')
 
- .factory('Peticiones', function ($http, $q, $cacheFactory, BaseUrl) {
+ .factory('Peticiones', function ($http, BaseUrl) {
     return {
-      isEmpty: function (obj) {
-          var hasOwnProperty = Object.prototype.hasOwnProperty;
-          if (obj === null) return true;
-          if (obj.length > 0)    return false;
-          if (obj.length === 0)  return true;
-          for (var key in obj) {
-              if (hasOwnProperty.call(obj, key)) return false;
-          }
-
-          return true;
-
-      },
-      Login: function(username, password){
+      GetEventos: function(){
           var url = BaseUrl;
           var soapRequest =
-            '<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:ws="http://ws/">' +
-             '<soap:Header/>' +
-              '<soap:Body>' +
-                '<ws:getRememberMeToken>' +
-                  '<arg0>' + username + '</arg0>' +
-                  '<arg1>' + password + '</arg1>' +
-               '</ws:getRememberMeToken>' +
-              '</soap:Body>' +
-            '</soap:Envelope>';
+            '<soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="ServiciosAusape_wsdl">' +
+                '<soapenv:Header/>' +
+                '<soapenv:Body>' +
+                    ' <ser:getEvents soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>' +
+                '</soapenv:Body>' +
+            '</soapenv:Envelope>';
 
             return $.ajax({
               type: "POST",
               url: url,
-              contentType: "text/xml",
-              dataType: "xml",
+              contentType: 'text/xml',
+              dataType: 'xml',
               data: soapRequest,
               success: function(data, status, req) {
-                console.log('Entro en success en Login ' );
+                console.log('Entro en success en GetEventos ' );
+                //console.log('EL data es: ' + JSON.stringify(data));
+                //console.log('EL status es: ' + status);
+                //console.log('EL req es: ' + JSON.stringify(req));
               },
               error: function processError(data, status, req) {
-                console.log('Entro en error en Login ' );
+                console.log('Entro en error en GetEventos ' );
                 console.log('EL data es: ' + JSON.stringify(data));
                 console.log('EL status es: ' + status);
                 console.log('EL req es: ' + req);
               }  
           })
-
       },
-      Logout: function (rememberme) {
+      GetEventosByMonth: function(month, year){
           var url = BaseUrl;
           var soapRequest =
-            '<?xml version="1.0" encoding="utf-8"?> \
-            <soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:ws="http://ws/">\
-              <soap:Header/> \
-              <soap:Body> \
-                <ws:logout>\
-                  <arg0>' + rememberme + '</arg0> \
-               </ws:logout> \
-              </soap:Body> \
-            </soap:Envelope>';
+            '<soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="ServiciosAusape_wsdl">' +
+                '<soapenv:Header/>' +
+                '<soapenv:Body>' +
+                    '<ser:getEventsByMonth soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">' +
+                        '<month xsi:type="xsd:string">' + month + '</month>' +
+                        '<anio xsi:type="xsd:string">' + year + '</anio>' +
+                    '</ser:getEventsByMonth>' +
+                '</soapenv:Body>' +
+            '</soapenv:Envelope>';     
 
             return $.ajax({
-              type: "GET",
+              type: "POST",
               url: url,
-              contentType: "text/xml",
-              dataType: "xml",
+              contentType: 'text/xml',
+              dataType: 'xml',
               data: soapRequest,
               success: function(data, status, req) {
-                  console.log('Entro en success en Logout ' );
-                  console.log('EL data es: ' + JSON.stringify(data));
-                  console.log('EL status es: ' + status);
-                  console.log('EL req es: ' + req);
+                console.log('Entro en success en GetEventosByMonth ' );
+                //console.log('EL data es: ' + JSON.stringify(data));
+                //console.log('EL status es: ' + status);
+                //console.log('EL req es: ' + JSON.stringify(req));
               },
               error: function processError(data, status, req) {
-                  console.log('Entro en error en Logout ' );
-                  console.log('EL data es: ' + JSON.stringify(data));
-                  console.log('EL status es: ' + status);
-                  console.log('EL req es: ' + req);
+                console.log('Entro en error en GetEventosByMonth ' );
+                console.log('EL data es: ' + JSON.stringify(data));
+                console.log('EL status es: ' + status);
+                console.log('EL req es: ' + req);
               }  
           })
       },
-      GetFiestasProximoAnio: function (rememberme) {
+      GetEventosImportantes: function(month){
           var url = BaseUrl;
           var soapRequest =
-            '<?xml version="1.0" encoding="utf-8"?> \
-            <soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:ws="http://ws/">\
-              <soap:Header/> \
-              <soap:Body> \
-                <ws:getFiestasProximoAnio>\
-                  <arg0>' + rememberme + '</arg0> \
-               </ws:getFiestasProximoAnio> \
-              </soap:Body> \
-            </soap:Envelope>';
+            '<soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="ServiciosAusape_wsdl">' +
+                '<soapenv:Header/>' +
+                '<soapenv:Body>' +
+                    '<ser:getImportantEvents soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>' +
+                '</soapenv:Body>' +
+            '</soapenv:Envelope>';     
+
+            return $.ajax({
+              type: "POST",
+              url: url,
+              contentType: 'text/xml',
+              dataType: 'xml',
+              data: soapRequest,
+              success: function(data, status, req) {
+                console.log('Entro en success en GetEventos ' );
+                //console.log('EL data es: ' + JSON.stringify(data));
+                //console.log('EL status es: ' + status);
+                //console.log('EL req es: ' + JSON.stringify(req));
+              },
+              error: function processError(data, status, req) {
+                console.log('Entro en error en GetEventos ' );
+                console.log('EL data es: ' + JSON.stringify(data));
+                console.log('EL status es: ' + status);
+                console.log('EL req es: ' + req);
+              }  
+          })
+      },
+      GetEventosById: function(idEvento){
+          var url = BaseUrl;
+          var soapRequest =
+            '<soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">' +
+                '<soapenv:Header/>' +
+                '<soapenv:Body>' +
+                    '<ser:getEventById soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">' +
+                        '<id xsi:type="xsd:string">' + idEvento + '</id>' +
+                    '</ser:getEventById>' +
+                '</soapenv:Body>' +
+            '</soapenv:Envelope>';
 
             return $.ajax({
               type: "POST",
@@ -100,28 +118,30 @@ angular.module('starter.services', [])
               dataType: "xml",
               data: soapRequest,
               success: function(data, status, req) {
-                  console.log('Entro en success en GetFiestasProximoAnio ' );
+                console.log('Entro en success en GetEventosById ' );
+                //console.log('EL data es: ' + JSON.stringify(data));
+                //console.log('EL status es: ' + status);
+                //console.log('EL req es: ' + JSON.stringify(req));
               },
               error: function processError(data, status, req) {
-                  console.log('Entro en error en GetFiestasProximoAnio ' );
-                  console.log('EL data es: ' + JSON.stringify(data));
-                  console.log('EL status es: ' + status);
-                  console.log('EL req es: ' + req);
+                console.log('Entro en error en GetEventosById ' );
+                console.log('EL data es: ' + JSON.stringify(data));
+                console.log('EL status es: ' + status);
+                console.log('EL req es: ' + req);
               }  
           })
       },
-      GetFiestasProximosDias: function (rememberme) {
+      GetSessionsByType: function(typeSession){
           var url = BaseUrl;
           var soapRequest =
-            '<?xml version="1.0" encoding="utf-8"?> \
-            <soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:ws="http://ws/">\
-              <soap:Header/> \
-              <soap:Body> \
-                <ws:getFiestasProximos3Dias>\
-                  <arg0>' + rememberme + '</arg0> \
-               </ws:getFiestasProximos3Dias> \
-              </soap:Body> \
-            </soap:Envelope>';
+            '<soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="ServiciosAusape_wsdl">' +
+                '<soapenv:Header/>' +
+                '<soapenv:Body>' +
+                    '<ser:getSessionsByType soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">' +
+                        '<id xsi:type="xsd:string">' + typeSession +'</id>' +
+                    '</ser:getSessionsByType>' +
+                '</soapenv:Body>' +
+            '</soapenv:Envelope>';
 
             return $.ajax({
               type: "POST",
@@ -130,28 +150,28 @@ angular.module('starter.services', [])
               dataType: "xml",
               data: soapRequest,
               success: function(data, status, req) {
-                  console.log('Entro en success en GetFiestasProximosDias ' );
+                console.log('Entro en success en GetSessionsByType ' );
+                //console.log('EL data es: ' + JSON.stringify(data));
+                //console.log('EL status es: ' + status);
+                //console.log('EL req es: ' + JSON.stringify(req));
               },
               error: function processError(data, status, req) {
-                  console.log('Entro en error en GetFiestasProximosDias ' );
-                  console.log('EL data es: ' + JSON.stringify(data));
-                  console.log('EL status es: ' + status);
-                  console.log('EL req es: ' + req);
+                console.log('Entro en error en GetSessionsByType ' );
+                console.log('EL data es: ' + JSON.stringify(data));
+                console.log('EL status es: ' + status);
+                console.log('EL req es: ' + req);
               }  
           })
       },
-      GetServiciosHorariosTrenLnMad: function (rememberme, fecha) {
+      GetSessionsMagistrales: function(){
           var url = BaseUrl;
           var soapRequest =
-            '<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:ws="http://ws/">\
-              <soap:Header/> \
-              <soap:Body> \
-                <ws:getServiciosHorariosTrenLnMad>\
-                  <arg0>' + rememberme + '</arg0> \
-                  <arg1>' + fecha + '</arg1> \
-               </ws:getServiciosHorariosTrenLnMad> \
-              </soap:Body> \
-            </soap:Envelope>';
+            '<soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="ServiciosAusape_wsdl">' +
+                '<soapenv:Header/>' +
+                '<soapenv:Body>' +
+                    '<ser:getSessionsMagistral soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>' +
+                '</soapenv:Body>' +
+            '</soapenv:Envelope>';
 
             return $.ajax({
               type: "POST",
@@ -160,29 +180,28 @@ angular.module('starter.services', [])
               dataType: "xml",
               data: soapRequest,
               success: function(data, status, req) {
-                  console.log('Entro en success en GetServiciosHorariosTrenLnMad ' );
+                console.log('Entro en success en GetSessionsMagistrales ' );
+                //console.log('EL data es: ' + JSON.stringify(data));
+                //console.log('EL status es: ' + status);
+                //console.log('EL req es: ' + JSON.stringify(req));
               },
               error: function processError(data, status, req) {
-                  console.log('Entro en error en GetServiciosHorariosTrenLnMad ' );
-                  console.log('EL data es: ' + JSON.stringify(data));
-                  console.log('EL status es: ' + status);
-                  console.log('EL req es: ' + req);
+                console.log('Entro en error en GetSessionsMagistrales ' );
+                console.log('EL data es: ' + JSON.stringify(data));
+                console.log('EL status es: ' + status);
+                console.log('EL req es: ' + req);
               }  
           })
       },
-      GetServiciosHorariosTrenMadLn: function (rememberme, fecha) {
+      GetAgenda: function(){
           var url = BaseUrl;
           var soapRequest =
-            '<?xml version="1.0" encoding="utf-8"?> \
-            <soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:ws="http://ws/">\
-              <soap:Header/> \
-              <soap:Body> \
-                <ws:getServiciosHorariosTrenMadLn>\
-                  <arg0>' + rememberme + '</arg0> \
-                  <arg1>' + fecha + '</arg1> \
-               </ws:getServiciosHorariosTrenMadLn> \
-              </soap:Body> \
-            </soap:Envelope>';
+            '<soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="ServiciosAusape_wsdl">' +
+                '<soapenv:Header/>' +
+                '<soapenv:Body>' +
+                    '<ser:getAgenda soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>' +
+                '</soapenv:Body>' +
+            '</soapenv:Envelope>';
 
             return $.ajax({
               type: "POST",
@@ -191,28 +210,28 @@ angular.module('starter.services', [])
               dataType: "xml",
               data: soapRequest,
               success: function(data, status, req) {
-                  console.log('Entro en success en GetServiciosHorariosTrenMadLn ' );
+                console.log('Entro en success en GetAgenda ' );
+                //console.log('EL data es: ' + JSON.stringify(data));
+                //console.log('EL status es: ' + status);
+                //console.log('EL req es: ' + JSON.stringify(req));
               },
               error: function processError(data, status, req) {
-                  console.log('Entro en error en GetServiciosHorariosTrenMadLn ' );
-                  console.log('EL data es: ' + JSON.stringify(data));
-                  console.log('EL status es: ' + status);
-                  console.log('EL req es: ' + req);
+                console.log('Entro en error en GetAgenda ' );
+                console.log('EL data es: ' + JSON.stringify(data));
+                console.log('EL status es: ' + status);
+                console.log('EL req es: ' + req);
               }  
           })
       },
-      GetStatusUser: function (rememberme) {
+      GetComoLlegar: function(){
           var url = BaseUrl;
           var soapRequest =
-            '<?xml version="1.0" encoding="utf-8"?> \
-            <soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:ws="http://ws/">\
-              <soap:Header/> \
-              <soap:Body> \
-                <ws:getStatusUser>\
-                  <arg0>' + rememberme + '</arg0> \
-               </ws:getStatusUser> \
-              </soap:Body> \
-            </soap:Envelope>';
+            '<soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="ServiciosAusape_wsdl">' +
+                '<soapenv:Header/>' +
+                '<soapenv:Body>' +
+                    '<ser:getComoLlegar soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>' +
+                '</soapenv:Body>' +
+            '</soapenv:Envelope>';
 
             return $.ajax({
               type: "POST",
@@ -221,28 +240,28 @@ angular.module('starter.services', [])
               dataType: "xml",
               data: soapRequest,
               success: function(data, status, req) {
-                  console.log('Entro en success en GetStatusUser ' );
+                console.log('Entro en success en GetComoLlegar ' );
+                //console.log('EL data es: ' + JSON.stringify(data));
+                //console.log('EL status es: ' + status);
+                //console.log('EL req es: ' + JSON.stringify(req));
               },
               error: function processError(data, status, req) {
-                  console.log('Entro en error en GetStatusUser ' );
-                  console.log('EL data es: ' + JSON.stringify(data));
-                  console.log('EL status es: ' + status);
-                  console.log('EL req es: ' + req);
+                console.log('Entro en error en GetComoLlegar ' );
+                console.log('EL data es: ' + JSON.stringify(data));
+                console.log('EL status es: ' + status);
+                console.log('EL req es: ' + req);
               }  
           })
       },
-      GetTablonAnuncios: function (rememberme) {
+      GetFotos: function(){
           var url = BaseUrl;
           var soapRequest =
-            '<?xml version="1.0" encoding="utf-8"?> \
-            <soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:ws="http://ws/">\
-              <soap:Header/> \
-              <soap:Body> \
-                <ws:getTablonAnuncios>\
-                  <arg0>' + rememberme + '</arg0> \
-               </ws:getTablonAnuncios> \
-              </soap:Body> \
-            </soap:Envelope>';
+            '<soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="ServiciosAusape_wsdl">' +
+                '<soapenv:Header/>' +
+                '<soapenv:Body>' +
+                    '<ser:getFotos soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>' +
+                '</soapenv:Body>' +
+            '</soapenv:Envelope>';
 
             return $.ajax({
               type: "POST",
@@ -251,29 +270,31 @@ angular.module('starter.services', [])
               dataType: "xml",
               data: soapRequest,
               success: function(data, status, req) {
-                  console.log('Entro en success en GetTablonAnuncios ' );
+                console.log('Entro en success en GetFotos ' );
+                //console.log('EL data es: ' + JSON.stringify(data));
+                //console.log('EL status es: ' + status);
+                //console.log('EL req es: ' + JSON.stringify(req));
               },
               error: function processError(data, status, req) {
-                  console.log('Entro en error en GetTablonAnuncios ' );
-                  console.log('EL data es: ' + JSON.stringify(data));
-                  console.log('EL status es: ' + status);
-                  console.log('EL req es: ' + req);
+                console.log('Entro en error en GetFotos ' );
+                console.log('EL data es: ' + JSON.stringify(data));
+                console.log('EL status es: ' + status);
+                console.log('EL req es: ' + req);
               }  
           })
       },
-      GetAnuncioPorId: function (rememberme, id) {
+      GetHref: function(idSesion, idTipo){
           var url = BaseUrl;
           var soapRequest =
-            '<?xml version="1.0" encoding="utf-8"?> \
-            <soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:ws="http://ws/">\
-              <soap:Header/> \
-              <soap:Body> \
-                <ws:getAnuncioPorId> \
-                  <arg0>' + rememberme + '</arg0> \
-                  <arg1>' + id + '</arg1> \
-               </ws:getAnuncioPorId> \
-              </soap:Body> \
-            </soap:Envelope>';
+            '<soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="ServiciosAusape_wsdl">' +
+                '<soapenv:Header/>' +
+                '<soapenv:Body>' +
+                    '<ser:getHref soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">' +
+                        '<idSession xsi:type="xsd:string">' + idSesion + '</idSession>' +
+                        '<idTipo xsi:type="xsd:string">' + idTipo + '</idTipo>' +
+                    '</ser:getHref>'+
+                '</soapenv:Body>' +
+            '</soapenv:Envelope>';
 
             return $.ajax({
               type: "POST",
@@ -282,28 +303,28 @@ angular.module('starter.services', [])
               dataType: "xml",
               data: soapRequest,
               success: function(data, status, req) {
-                  console.log('Entro en success en GetAnuncioPorId ' );
+                console.log('Entro en success en GetFotos ' );
+                //console.log('EL data es: ' + JSON.stringify(data));
+                //console.log('EL status es: ' + status);
+                //console.log('EL req es: ' + JSON.stringify(req));
               },
               error: function processError(data, status, req) {
-                  console.log('Entro en error en GetAnuncioPorId ' );
-                  console.log('EL data es: ' + JSON.stringify(data));
-                  console.log('EL status es: ' + status);
-                  console.log('EL req es: ' + req);
+                console.log('Entro en error en GetFotos ' );
+                console.log('EL data es: ' + JSON.stringify(data));
+                console.log('EL status es: ' + status);
+                console.log('EL req es: ' + req);
               }  
           })
       },
-      GetTablonBoletines: function (rememberme) {
+      GetValoraciones: function(){
           var url = BaseUrl;
           var soapRequest =
-            '<?xml version="1.0" encoding="utf-8"?> \
-            <soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:ws="http://ws/">\
-              <soap:Header/> \
-              <soap:Body> \
-                <ws:getTablonBoletines>\
-                  <arg0>' + rememberme + '</arg0> \
-               </ws:getTablonBoletines> \
-              </soap:Body> \
-            </soap:Envelope>';
+            '<soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="ServiciosAusape_wsdl">' +
+                '<soapenv:Header/>' +
+                '<soapenv:Body>' +
+                    '<ser:getValoraciones soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>' +
+                '</soapenv:Body>' +
+            '</soapenv:Envelope>';
 
             return $.ajax({
               type: "POST",
@@ -312,264 +333,16 @@ angular.module('starter.services', [])
               dataType: "xml",
               data: soapRequest,
               success: function(data, status, req) {
-                  console.log('Entro en success en GetTablonBoletines ' );
+                console.log('Entro en success en GetValoraciones ' );
+                console.log('EL data es: ' + JSON.stringify(data));
+                console.log('EL status es: ' + status);
+                console.log('EL req es: ' + JSON.stringify(req));
               },
               error: function processError(data, status, req) {
-                  console.log('Entro en error en GetTablonBoletines ' );
-                  console.log('EL data es: ' + JSON.stringify(data));
-                  console.log('EL status es: ' + status);
-                  console.log('EL req es: ' + req);
-              }  
-          })
-      },
-      GetBoletinPorId: function (rememberme, id) {
-          var url = BaseUrl;
-          var soapRequest =
-            '<?xml version="1.0" encoding="utf-8"?> \
-            <soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:ws="http://ws/">\
-              <soap:Header/> \
-              <soap:Body> \
-                <ws:getBoletinPorId> \
-                  <arg0>' + rememberme + '</arg0> \
-                  <arg1>' + id + '</arg1> \
-               </ws:getBoletinPorId> \
-              </soap:Body> \
-            </soap:Envelope>';
-
-            return $.ajax({
-              type: "POST",
-              url: url,
-              contentType: "text/xml",
-              dataType: "xml",
-              data: soapRequest,
-              success: function(data, status, req) {
-                  console.log('Entro en success en GetBoletinPorId ' );
-              },
-              error: function processError(data, status, req) {
-                  console.log('Entro en error en GetBoletinPorId ' );
-                  console.log('EL data es: ' + JSON.stringify(data));
-                  console.log('EL status es: ' + status);
-                  console.log('EL req es: ' + req);
-              }  
-          })
-      },
-      GetEncuestasActivas: function (rememberme) {
-          var url = BaseUrl;
-          var soapRequest =
-            '<?xml version="1.0" encoding="utf-8"?> \
-            <soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:ws="http://ws/">\
-              <soap:Header/> \
-              <soap:Body> \
-                <ws:getServiciosEncuestasActivas>\
-                  <arg0>' + rememberme + '</arg0> \
-               </ws:getServiciosEncuestasActivas> \
-              </soap:Body> \
-            </soap:Envelope>';
-
-            return $.ajax({
-              type: "POST",
-              url: url,
-              contentType: "text/xml",
-              dataType: "xml",
-              data: soapRequest,
-              success: function(data, status, req) {
-                  console.log('Entro en success en GetEncuestasActivas ' );
-              },
-              error: function processError(data, status, req) {
-                  console.log('Entro en error en GetEncuestasActivas ' );
-                  console.log('EL data es: ' + JSON.stringify(data));
-                  console.log('EL status es: ' + status);
-                  console.log('EL req es: ' + req);
-              }  
-          })
-      },
-      GetEncuestasExpiradas: function (rememberme) {
-          var url = BaseUrl;
-          var soapRequest =
-            '<?xml version="1.0" encoding="utf-8"?> \
-            <soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:ws="http://ws/">\
-              <soap:Header/> \
-              <soap:Body> \
-                <ws:getServiciosEncuestasExpiradas>\
-                  <arg0>' + rememberme + '</arg0> \
-               </ws:getServiciosEncuestasExpiradas> \
-              </soap:Body> \
-            </soap:Envelope>';
-
-            return $.ajax({
-              type: "POST",
-              url: url,
-              contentType: "text/xml",
-              dataType: "xml",
-              data: soapRequest,
-              success: function(data, status, req) {
-                  console.log('Entro en success en GetEncuestasExpiradas ' );
-              },
-              error: function processError(data, status, req) {
-                  console.log('Entro en error en GetEncuestasExpiradas ' );
-                  console.log('EL data es: ' + JSON.stringify(data));
-                  console.log('EL status es: ' + status);
-                  console.log('EL req es: ' + req);
-              }  
-          })
-      },
-      GetEncuestasPorId: function (rememberme, id) {
-          var url = BaseUrl;
-          var soapRequest =
-            '<?xml version="1.0" encoding="utf-8"?> \
-            <soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:ws="http://ws/">\
-              <soap:Header/> \
-              <soap:Body> \
-                <ws:getServiciosVisualizacionEncuestaPorId>\
-                  <arg0>' + rememberme + '</arg0> \
-                  <arg1>' + id + '</arg1> \
-               </ws:getServiciosVisualizacionEncuestaPorId> \
-              </soap:Body> \
-            </soap:Envelope>';
-
-            return $.ajax({
-              type: "POST",
-              url: url,
-              contentType: "text/xml",
-              dataType: "xml",
-              data: soapRequest,
-              success: function(data, status, req) {
-                  console.log('Entro en success en GetEncuestasPorId ' );
-              },
-              error: function processError(data, status, req) {
-                  console.log('Entro en error en GetEncuestasPorId ' );
-                  console.log('EL data es: ' + JSON.stringify(data));
-                  console.log('EL status es: ' + status);
-                  console.log('EL req es: ' + req);
-              }  
-          })
-      },
-      GetVotarEncuesta: function (rememberme, id, voto) {
-          var url = BaseUrl;
-          var soapRequest =
-            '<?xml version="1.0" encoding="utf-8"?> \
-            <soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:ws="http://ws/">\
-              <soap:Header/> \
-              <soap:Body> \
-                <ws:getServiciosVotarEncuesta>\
-                  <arg0>' + rememberme + '</arg0> \
-                  <arg1>' + id + '</arg1> \
-                  <arg2>' + voto + '</arg2> \
-               </ws:getServiciosVotarEncuesta> \
-              </soap:Body> \
-            </soap:Envelope>';
-
-            return $.ajax({
-              type: "POST",
-              url: url,
-              contentType: "text/xml",
-              dataType: "xml",
-              data: soapRequest,
-              success: function(data, status, req) {
-                  console.log('Entro en success en GetVotarEncuesta ' );
-              },
-              error: function processError(data, status, req) {
-                  console.log('Entro en error en GetVotarEncuesta ' );
-                  console.log('EL data es: ' + JSON.stringify(data));
-                  console.log('EL status es: ' + status);
-                  console.log('EL req es: ' + req);
-              }  
-          })
-      },
-      GetCondicionesLegales: function (rememberme) {
-          var url = BaseUrl;
-          var soapRequest =
-            '<?xml version="1.0" encoding="utf-8"?> \
-            <soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:ws="http://ws/">\
-              <soap:Header/> \
-              <soap:Body> \
-                <ws:getTerminosYCondiciones>\
-                  <arg0>' + rememberme + '</arg0> \
-               </ws:getTerminosYCondiciones> \
-              </soap:Body> \
-            </soap:Envelope>';
-
-            return $.ajax({
-              type: "POST",
-              url: url,
-              contentType: "text/xml",
-              dataType: "xml",
-              data: soapRequest,
-              success: function(data, status, req) {
-                  console.log('Entro en success en GetCondicionesLegales ' );
-              },
-              error: function processError(data, status, req) {
-                  console.log('Entro en error en GetCondicionesLegales ' );
-                  console.log('EL data es: ' + JSON.stringify(data));
-                  console.log('EL status es: ' + status);
-                  console.log('EL req es: ' + req);
-              }  
-          })
-      },
-      AcceptCondicionesLegales: function (rememberme) {
-          var url = BaseUrl;
-          var soapRequest =
-            '<?xml version="1.0" encoding="utf-8"?> \
-            <soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:ws="http://ws/">\
-              <soap:Header/> \
-              <soap:Body> \
-                <ws:aceptarTerminosYCondiciones>\
-                  <arg0>' + rememberme + '</arg0> \
-               </ws:aceptarTerminosYCondiciones> \
-              </soap:Body> \
-            </soap:Envelope>';
-
-            return $.ajax({
-              type: "POST",
-              url: url,
-              contentType: "text/xml",
-              dataType: "xml",
-              data: soapRequest,
-              success: function(data, status, req) {
-                  console.log('Entro en success en GetCondicionesLegales ' );
-              },
-              error: function processError(data, status, req) {
-                  console.log('Entro en error en GetCondicionesLegales ' );
-                  console.log('EL data es: ' + JSON.stringify(data));
-                  console.log('EL status es: ' + status);
-                  console.log('EL req es: ' + req);
-              }  
-          })
-      },
-      RegistrarSolicitudAlta: function (nombre, apellido1, apellido2, correo1, correo2) {
-          var url = BaseUrl;
-          var soapRequest =
-            '<?xml version="1.0" encoding="utf-8"?> \
-            <soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:ws="http://ws/">\
-              <soap:Header/> \
-              <soap:Body> \
-                <ws:registerSolicitudAlta>\
-                  <arg0>' + nombre + '</arg0> \
-                  <arg1>' + apellido1 + '</arg1> \
-                  <arg2>' + apellido2 + '</arg2> \
-                  <arg3>' + correo1 + '</arg3> \
-                  <arg4>' + correo2 + '</arg4> \
-               </ws:registerSolicitudAlta> \
-              </soap:Body> \
-            </soap:Envelope>';
-
-            return $.ajax({
-              type: "POST",
-              url: url,
-              contentType: "text/xml",
-              dataType: "xml",
-              data: soapRequest,
-              success: function(data, status, req) {
-                  console.log('Entro en success en GetCondicionesLegales ' );
-                  console.log('EL data es: ' + JSON.stringify(data));
-                  console.log('EL status es: ' + status);
-                  console.log('EL req es: ' + req);
-              },
-              error: function processError(data, status, req) {
-                  console.log('Entro en error en GetCondicionesLegales ' );
-                  console.log('EL data es: ' + JSON.stringify(data));
-                  console.log('EL status es: ' + status);
-                  console.log('EL req es: ' + req);
+                console.log('Entro en error en GetValoraciones ' );
+                console.log('EL data es: ' + JSON.stringify(data));
+                console.log('EL status es: ' + status);
+                console.log('EL req es: ' + req);
               }  
           })
       }

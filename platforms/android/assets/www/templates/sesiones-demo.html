@@ -1,0 +1,37 @@
+<ion-view>
+    <ion-nav-bar align-title="center">
+        <ion-nav-buttons>
+           <div><a href="#/forum" class="btnAtras"><i class="fa fa-arrow-left" aria-hidden="true"></i></a></div>
+        </ion-nav-buttons>
+        <ion-nav-title><a class="btnAtras"><img src="img/logoAusape.png"/></a></ion-nav-title>
+        <ion-nav-buttons side="right">
+        </ion-nav-buttons>
+    </ion-nav-bar>
+    <ion-content>
+        <div class="contenedor-paralelas">
+            <center><h2>{{translateView('FORUM-MENU-DEMO')}}</h2></center>
+            
+            <div ng-repeat="dato in datos">
+                <div class="fecha_sesiones">{{dato.fecha}}</div>
+                
+                <div style="width:100%;" ng-repeat="hora in dato.horas">
+                    <div class="hora_sesiones">{{hora.hora}}</div>
+                    
+                    <div class="item_sesiones" ng-repeat="sesion in hora.sesiones" ng-if="sesion.sesiId != sesion.idAnterior" ng-click="abrirModal(sesion.sesiId)">
+                        <img src="http://www.ausape.com{{sesion.sesiImagen}}" alt="">
+                        <p>
+                            <strong>{{sesion.sesiEmpresa}}</strong>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <center><p>{{noDataSesiones}}</p></center>
+		</div>
+    </ion-content>
+    <ion-footer-bar class="hide-on-keyboard-open">
+        <div class="pie interiores"></div>
+    </ion-footer-bar>
+    <ion-footer-bar class="hide-on-keyboard-open">
+        <div class="pie interiores"></div>
+    </ion-footer-bar>
+</ion-view>

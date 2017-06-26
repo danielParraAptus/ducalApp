@@ -1,0 +1,28 @@
+<ion-view>
+    <ion-nav-bar align-title="center">
+        <ion-nav-buttons>
+           <div><a href="#/eventos-seleccionar-historicos" class="btnAtras"><i class="fa fa-arrow-left" aria-hidden="true"></i></a></div>
+        </ion-nav-buttons>
+        <ion-nav-title><a class="btnAtras"><img style="width: auto; height: 40px;" src="img/logoAusape.png"/></a></ion-nav-title>
+        <ion-nav-buttons side="right">
+        </ion-nav-buttons>
+    </ion-nav-bar>
+    <ion-content>
+        <div class="contenedor-eventos">
+            <center><h2>{{translateView('EVENTS-HISTORICOS-TITLE')}}</h2></center>
+            <div class="bloque_contenido sombreado">{{si}}</div>
+            <div class="bloque_contenido sombreado" ng-repeat="dato in datos" ng-click="verEvento(dato.eventoId)">
+                <img src="{{dato.guid}}" alt="">
+                <p>
+                    <strong ng-bind-html="dato.eventoName"></strong>
+                    <span>{{dato.eventoStartDate}} {{dato.eventoStartTime}}</span>
+                    <span>{{dato.eventoEndDate}} {{dato.eventoEndTime}}</span>
+                </p>
+            </div>
+            <center><p>{{noDataHistoricos}}</p></center>
+		</div>
+    </ion-content>
+    <ion-footer-bar class="hide-on-keyboard-open">
+        <div class="pie interiores"></div>
+    </ion-footer-bar>
+</ion-view>

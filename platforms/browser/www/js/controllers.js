@@ -1,655 +1,1135 @@
-angular.module('starter.controllers', [])
-  .controller('LoginCtrl', function($scope, $state, $ionicPopup, Peticiones) {
-    $scope.$on('$ionicView.enter', function(){
-        console.log('Estoy en LoginCtrl');
+var app = angular.module('starter.controllers', []);
 
-        localStorage.setItem('pantallaAnterior','');
-        var remember = localStorage.getItem('rememberMe');
-
-        if(remember){
-          $state.go('novedades');
-        }
-    });
-    
-
-    $scope.hacerLogin = function(){
-      console.log('Pulso el boton de hacer login');
-      var usu = document.getElementById('textoUsuario').value;
-      var pass  = document.getElementById('textoPasswd').value;
-
-      $.when(Peticiones.Login(usu, pass)).done(function(devuelto, data , data2){
-        console.log('Entro en data2: ' + data2);
-        var respuesta = JSON.stringify(data2);
-
-        if(respuesta.split('<return>')[1] != undefined){
-          console.log('Entro en success: ');
-          var respuesta2 = respuesta.split('<return>')[1];
-          var token = respuesta2.split('</return>')[0];
-          localStorage.setItem('rememberMe', token);
-          $state.go('novedades');
-
-        }else{
-          console.log('Entro en ELSE: ');
-          $ionicPopup.alert({
-              title: '¡ERROR!',
-              template: 'USUARIO O CONTRASEÑA INCORRECTOS'
-          });
-          $state.go('login');
-        }
-      })
-    }
-  })
-   /////////////////////////////////////////////
-  .controller('MenuCtrl', function($scope) {
-    console.log('Estoy en MenuCtrl');
-  })
-   /////////////////////////////////////////////
-  .controller('NovedadesCtrl', function($scope, $state) {
-    var anterior;
-    var div;
-
-    $scope.$on('$ionicView.enter', function(){
-        loadNovedades();
-    });
-
-    function loadNovedades(){
-      anterior = localStorage.getItem('pantallaAnterior');
-      div = document.getElementById('atrasNovedades');
-      console.log('anterior es:' + anterior);
-
-      if(anterior != ''){
-        console.log('hola');
-        $scope.algo = anterior;
-        document.getElementById('atrasNovedades').style.visibility = 'visible';
-      }else{
-        console.log('adios: ' + JSON.stringify(div));
-        document.getElementById('atrasNovedades').style.visibility = 'visible';
-      }
-
-      localStorage.setItem('pantallaAnterior','#/novedades');
-
-    }
-    
-  })
-  /////////////////////////////////////////////
-  .controller('ServiciosCtrl', function($scope, $state){
-    var anterior ;
-
-    $scope.$on('$ionicView.enter', function(){
-        loadServicios();
-    });
-
-    function loadServicios(){
-        console.log('Entro en load');
-        anterior = localStorage.getItem('pantallaAnterior');
-        console.log('El anterior es: ' + anterior);
-        $scope.algo = anterior;
-
-        localStorage.setItem('pantallaAnterior','#/servicios');  
-    }
-
-  })
-   /////////////////////////////////////////////
-  .controller('ServicioCartaCtrl', function($scope) {
-    $scope.$on('$ionicView.enter', function(){
-        
-    });
-
-    $scope.mostrarMenu = function(numero){
-        console.log('El numero es: ' + numero);
-        var boton;
-        var icono;
-
-        switch(numero){
-          case 0:
-            boton = document.getElementById('contenidoRaciones');
-            icono = document.getElementById('iconoRaciones');
-            break;
-          case 1:
-            boton = document.getElementById('contenidoEnsaladas');
-            icono = document.getElementById('iconoEnsaladas');
-            break;
-          case 2:
-            boton = document.getElementById('contenidoHuevos');
-            icono = document.getElementById('iconoHuevos');
-            break;
-          case 3:
-            boton = document.getElementById('contenidoVerduras');
-            icono = document.getElementById('iconoVerduras');
-            break;
-          case 4:
-            boton = document.getElementById('contenidoPescados');
-            icono = document.getElementById('iconoPescados');
-            break;
-          case 5:
-            boton = document.getElementById('contenidoPizza');
-            icono = document.getElementById('iconoPizza');
-            break;
-          case 6:
-            boton = document.getElementById('contenidoHamburguesas');
-            icono = document.getElementById('iconoHamburguesas');
-            break;
-          case 7:
-            boton = document.getElementById('contenidoSandwiches');
-            icono = document.getElementById('iconoSandwiches');
-            break;
-          case 8:
-            boton = document.getElementById('contenidoCarnes');
-            icono = document.getElementById('iconoCarnes');
-            break;
-        }
-
-        if(boton.style.display == 'inline-block'){
-          boton.style.display = 'none';
-          icono.className = 'fa fa-chevron-circle-down';
-        }else{
-          boton.style.display = 'inline-block';
-          icono.className = 'fa fa-chevron-circle-up';
-        }
-
-        
-    }
-    console.log('Estoy en ServicioCartaCtrl');
-  })
-   /////////////////////////////////////////////
-  .controller('ServicioCarreteraCtrl', function($scope) {
-    console.log('Estoy en ServicioCarreteraCtrl');
-  })
-   /////////////////////////////////////////////
-  .controller('ServicioEncuestasCtrl', function($scope) {
-    console.log('Estoy en ServicioEncuestasCtrl');
-  })
-   /////////////////////////////////////////////
-  .controller('ServicioTelefonosCtrl', function($scope) {
-    console.log('Estoy en ServicioTelefonosCtrl');
-  })
-   /////////////////////////////////////////////
-  .controller('ServicioIglesiaCtrl', function($scope) {
-    console.log('Estoy en ServicioIglesiaCtrl');
-  })
-   /////////////////////////////////////////////
-  .controller('ServicioMeteoCtrl', function($scope) {
-    console.log('Estoy en ServicioMeteoCtrl');
-  })
-   /////////////////////////////////////////////
-  .controller('ServicioPadelCtrl', function($scope) {
-    console.log('Estoy en ServicioPadelCtrl');
-  })
-   /////////////////////////////////////////////
-  .controller('ServicioTrenCtrl', function($scope, $state) {
-    var currentDate = new Date();
-    $scope.date = currentDate;
-
-    $scope.onezoneDatepicker = {
-        date: currentDate,
-        mondayFirst: false,
-        months: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-        daysOfTheWeek: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
-        startDate: new Date(1989, 1, 26),
-        endDate: new Date(2024, 1, 26),
-        disablePastDays: false,
-        disableSwipe: false,
-        disableWeekend: false,
-        disableDates: false,
-        showDatepicker: false,
-        showTodayButton: true,
-        calendarMode: false,
-        hideCancelButton: false,
-        hideSetButton: false,
-        callback: function (value) {
-
-        }
-    };
-
-    $scope.showDatepicker = function () {
-        $scope.onezoneDatepicker.showDatepicker = true;
-    };
-
-    $scope.buscarTrenes = function(){
-      var fecha = document.getElementById('labelFecha').value;
-      var date = new Date(fecha);
-      if(date.getMonth() < 10){
-        var dd = date.getDate() + '/0' + (date.getMonth()+1) + '/' + date.getFullYear();
-      }else{
-        var dd = date.getDate() + '/' + (date.getMonth()+1) + '/' + date.getFullYear();
-      }
-
-      console.log('La fechita es: ' + dd);
-      localStorage.setItem('fechaTren', dd);
-      $state.go('servicio-tren-mostrar');
-
-    }
-
-    console.log('Estoy en ServicioTrenCtrl');
-  })
-  .controller('ServicioTrenMostrarCtrl', function($scope, $state, $ionicPopup, Peticiones) {
-    $scope.$on('$ionicView.enter', function(){
-        console.log('Estoy en ServicioTrenMostrarCtrl');
-        var fecha = localStorage.getItem('fechaTren');
-        var remember = localStorage.getItem('rememberMe');
-        $scope.newDate = fecha;
-        sacarTrenesLnMad(remember, fecha);
-        sacarTrenesMadLn(remember, fecha);
-        $scope.mostrarLn();
-    });
-
-    $scope.mostrarMad = function(){
-      document.getElementById('MadLn').style.display = 'block';
-      document.getElementById('LnMad').style.display = 'none';
-      document.getElementById('btnMad').className = 'solapa_activa';
-      document.getElementById('btnLn').className = 'solapa';
-    }
-
-    $scope.mostrarLn = function(){
-      document.getElementById('MadLn').style.display = 'none';
-      document.getElementById('LnMad').style.display = 'block';
-      document.getElementById('btnLn').className = 'solapa_activa';
-      document.getElementById('btnMad').className = 'solapa';
-    }
-
-    function sacarTrenesMadLn(dato1, dato2){
-        console.log('Entro en sacarTrenesMadLn:');
-      $.when(Peticiones.GetServiciosHorariosTrenMadLn(dato1, dato2)).done(function(devuelto, data , data2){
-        var respuesta = data2.responseText;
-
-        var parser = new DOMParser();
-        var xmlDoc = parser.parseFromString(respuesta,"text/xml");
-        var array = xmlDoc.getElementsByTagName("return");
-
-        for(i = 0; i < array.length ; i++){
-          var duracion = array[i].getElementsByTagName('duracion')[0].childNodes[0].nodeValue;
-          var id = array[i].getElementsByTagName('id')[0].childNodes[0].nodeValue;
-          var llegada = array[i].getElementsByTagName('llegada')[0].childNodes[0].nodeValue;
-          var salida = array[i].getElementsByTagName('salida')[0].childNodes[0].nodeValue;
-
-          if(i == 0){
-            document.getElementById('tablaMadLn').innerHTML = '<tr>' +
-              '<th>ID</th>' + 
-              '<th>Salida</th>' +
-              '<th>Llegada</th>' + 
-              '<th>Duración</th>' + 
-              '</tr>	';
-            document.getElementById('tablaMadLn').innerHTML += '<tr class=\"alterno\">' +
-              '<td>' + id +'</td>' + 
-              '<td>' + salida +'</td>' +
-              '<td>' + llegada +'</td>' + 
-              '<td>' + duracion +'</td>' + 
-              '</tr>	';
-          }else{
-            if(i%2 == 0){
-              document.getElementById('tablaMadLn').innerHTML += '<tr class=\"alterno\">' +
-                '<td>' + id +'</td>' + 
-                '<td>' + salida +'</td>' +
-                '<td>' + llegada +'</td>' + 
-                '<td>' + duracion +'</td>' + 
-                '</tr>	';
-            }else{
-              document.getElementById('tablaMadLn').innerHTML += '<tr>' +
-                '<td>' + id +'</td>' + 
-                '<td>' + salida +'</td>' +
-                '<td>' + llegada +'</td>' + 
-                '<td>' + duracion +'</td>' + 
-                '</tr>	';
-            }
-          }
-        }
-      })
-    }
-
-    function sacarTrenesLnMad(dato1, dato2){
-        console.log('Entro en sacarTrenesLnMad:');
-      $.when(Peticiones.GetServiciosHorariosTrenLnMad(dato1, dato2)).done(function(devuelto, data , data2){
-        var respuesta = data2.responseText;
-
-        var parser = new DOMParser();
-        var xmlDoc = parser.parseFromString(respuesta,"text/xml");
-        var array = xmlDoc.getElementsByTagName("return");
-
-        for(i = 0; i < array.length ; i++){
-          var duracion = array[i].getElementsByTagName('duracion')[0].childNodes[0].nodeValue;
-          var id = array[i].getElementsByTagName('id')[0].childNodes[0].nodeValue;
-          var llegada = array[i].getElementsByTagName('llegada')[0].childNodes[0].nodeValue;
-          var salida = array[i].getElementsByTagName('salida')[0].childNodes[0].nodeValue;
-
-          if(i == 0){
-            document.getElementById('tablaLnMad').innerHTML = '<tr>' +
-              '<th>ID</th>' + 
-              '<th>Salida</th>' +
-              '<th>Llegada</th>' + 
-              '<th>Duración</th>' + 
-              '</tr>	';
-            document.getElementById('tablaLnMad').innerHTML += '<tr class=\"alterno\">' +
-              '<td>' + id +'</td>' + 
-              '<td>' + salida +'</td>' +
-              '<td>' + llegada +'</td>' + 
-              '<td>' + duracion +'</td>' + 
-              '</tr>	';
-          }else{
-            if(i%2 == 0){
-              document.getElementById('tablaLnMad').innerHTML += '<tr class=\"alterno\">' +
-                '<td>' + id +'</td>' + 
-                '<td>' + salida +'</td>' +
-                '<td>' + llegada +'</td>' + 
-                '<td>' + duracion +'</td>' + 
-                '</tr>	';
-            }else{
-              document.getElementById('tablaLnMad').innerHTML += '<tr>' +
-                '<td>' + id +'</td>' + 
-                '<td>' + salida +'</td>' +
-                '<td>' + llegada +'</td>' + 
-                '<td>' + duracion +'</td>' + 
-                '</tr>	';
-            }
-          }
-        }
-      })
-    }
-    
-  })
-  //////////////////////////////////////////////////////////
-  .controller('FiestasCtrl', function($scope, Peticiones) {
-    $scope.$on('$ionicView.enter', function(){
-        console.log('Estoy en FiestasCtrl');
-        var remember = localStorage.getItem('rememberMe');
-        console.log('El remember es: ' + remember);
-        mostrarFiestas(remember);
-    });
-
-    function mostrarFiestas(token){
-        $.when(Peticiones.GetFiestasProximoAnio(token)).done(function(devuelto, data , data2){
-            var respuesta = data2.responseText;
-
-            var parser = new DOMParser();
-            var xmlDoc = parser.parseFromString(respuesta,"text/xml");
-            var array = xmlDoc.getElementsByTagName("return");
-
-            for(i = 0; i < array.length ; i++){
-              localStorage.getItem('fechaFiestas');
-              var fecha = array[i].getElementsByTagName('fecha')[0].childNodes[0].nodeValue;
-              var date = new Date(fecha);
-              var dia = date.getDate();
-              var mes = date.getMonth() + 1;
-              var year = date.getFullYear();
-              var hora = date.getHours();
-              var minutos = date.getMinutes();
-              var str_fecha = dia + '/' + mes + '/' + year;
-              var otro = minutos;
-              var str_minutos = String(minutos);  
-              if(str_minutos == 0){
-                otro = '0' + minutos;
-              }
-
-              var weekday = new Array(7);
-                weekday[0] =  "Domingo";
-                weekday[1] = "Lunes";
-                weekday[2] = "Martes";
-                weekday[3] = "Miércoles";
-                weekday[4] = "Jueves";
-                weekday[5] = "Viernes";
-                weekday[6] = "Sábado";
-
-              var diaSemana = weekday[date.getDay()];
-              
-              var idFiesta = array[i].getElementsByTagName('idFiesta')[0].childNodes[0].nodeValue;
-              var lugar = array[i].getElementsByTagName('lugar')[0].childNodes[0].nodeValue;
-              var titulo = array[i].getElementsByTagName('titulo')[0].childNodes[0].nodeValue;
-
-              if(localStorage.getItem('fechaFiestas') == str_fecha){
-                document.getElementById('tablaFiestas').innerHTML += '<tr>' +
-                  '<td>' + hora + ':' + otro + '</td>' + 
-                  '<td>' + titulo + '</td>' +
-                  '<td>' + lugar + '</td>' + 
-                  '</tr>	';
-              }else{
-                localStorage.setItem('fechaFiestas', str_fecha);
-                if(diaSemana == 'Sábado' || diaSemana == 'Domingo'){
-                    document.getElementById('tablaFiestas').innerHTML += '<tr>' +
-                      '<th class="negrita">' + diaSemana + '</th>' + 
-                      '<th>' +  str_fecha + '</th>' + 
-                      '<th></th>' + 
-                      '</tr>	';
-                }else{
-                    document.getElementById('tablaFiestas').innerHTML += '<tr>' +
-                      '<th>' + diaSemana + '</th>' + 
-                      '<th>' +  str_fecha + '</th>' + 
-                      '<th></th>' + 
-                      '</tr>	';
-                }
-                
-                document.getElementById('tablaFiestas').innerHTML += '<tr>' +
-                  '<td>' + hora + ':' + otro + '</td>' + 
-                  '<td>' + titulo + '</td>' +
-                  '<td>' + lugar + '</td>' + 
-                  '</tr>	';
-              }
-              
-            }
-        })
-    }
-  })
-  .controller('AnunciosCtrl', function($scope, $state, Peticiones) {
-    $scope.$on('$ionicView.enter', function(){
-        console.log('Estoy en AnunciosCtrl');
-        var remember = localStorage.getItem('rememberMe');
-        console.log('El remember es: ' + remember);
-        mostrarAnuncios(remember);
-    });
-
-    $scope.mandarAnuncios = function(id){
-        console.log('El remember es: ' + id);
-        localStorage.setItem('idAnuncio',id);
-        $state.go('mostrar-anuncios');
-    }
-
-    function mostrarAnuncios(token){
-      $.when(Peticiones.GetTablonAnuncios(token)).done(function(devuelto, data , data2){
-          var respuesta = data2.responseText;
-          var parser = new DOMParser();
-          var xmlDoc = parser.parseFromString(respuesta,"text/xml");
-          var array = xmlDoc.getElementsByTagName("return");
-          var arrayObj = [];
-
-          for(i = 0; i < array.length ; i++){
-                var algo = [];
-                var apellido1 = array[i].getElementsByTagName('apellido1')[0].childNodes[0].nodeValue;
-                var apellido2 = array[i].getElementsByTagName('apellido2')[0].childNodes[0].nodeValue;
-                var fechaCreacion = array[i].getElementsByTagName('fechaCreacion')[0].childNodes[0].nodeValue;
-                var idAnuncio = array[i].getElementsByTagName('idAnuncio')[0].childNodes[0].nodeValue;
-                var idAutor = array[i].getElementsByTagName('idAutor')[0].childNodes[0].nodeValue;
-                var nombre = array[i].getElementsByTagName('nombre')[0].childNodes[0].nodeValue;
-                var titulo = array[i].getElementsByTagName('titulo')[0].childNodes[0].nodeValue;
-               
-                var date = new Date(fechaCreacion);
-                var dia = date.getDate();
-                var mes = date.getMonth() + 1;
-                var year = date.getFullYear();
-                var hora = date.getHours();
-                var minutos = date.getMinutes();
-                var str_fecha = dia + '/' + mes + '/' + year;
-                var otro = minutos;
-                var str_minutos = String(minutos);  
-                if(str_minutos == 0){
-                  otro = '0' + minutos;
-                }
-                
-                algo.fecha = str_fecha;
-                algo.titulo = titulo;
-                algo.nombre = nombre + ' ' + apellido1;
-                algo.id = idAnuncio;
-                arrayObj.push(algo);
-          }
-
-          $scope.datos = arrayObj;
-      })
-    }
-  })
-  .controller('MostrarAnunciosCtrl', function($scope, $state, Peticiones) {
+  app.controller('MenuCtrl', function($scope, $state, $cordovaDevice, $timeout, $ionicPopup, Peticiones) {
       $scope.$on('$ionicView.enter', function(){
-          console.log('Estoy en MostrarAnunciosCtrl');
-          var remember = localStorage.getItem('rememberMe');
-          var idAnuncio = localStorage.getItem('idAnuncio');
-          console.log('El remember es: ' + remember);
-          mostrarDatos(remember, idAnuncio);
+            $scope.fechaActual = new Date();
+            $scope.fechaFin = new Date(2017, 06, 22, 24);
+            $scope.menu = [];
+            console.log('UUIDas,omsoa');
+
+            var id = $cordovaDevice.getUUID();
+            console.log('UUID: ' + id);
+
+            if(id == '9e52303b71d6733a' ){
+                $scope.saludo = 'Hola PARRA';
+            }else if(id == '4c9d203096ea5bd0'){
+                $scope.saludo = 'Hola ALEJANDRO';
+            }
+
+            if(id == '9e52303b71d6733a' || id == '4c9d203096ea5bd0'){
+                console.log('Videoooooooo:');
+                $scope.video = true;
+            }else{
+                
+                $scope.video = false;
+            }
+
+            $scope.translateView = function(nombre) {
+                return translate(nombre);
+            }
       });
 
-      function mostrarDatos(token, id){
-          $.when(Peticiones.GetAnuncioPorId(token,id)).done(function(devuelto, data , data2){
-              var respuesta = data2.responseText;
-              var parser = new DOMParser();
-              var xmlDoc = parser.parseFromString(respuesta,"text/xml");
-              var array = xmlDoc.getElementsByTagName("return");
-              var objeto = [];
+  });
 
-              for(i = 0; i < array.length ; i++){
-                    var apellido1 = array[i].getElementsByTagName('apellido1')[0].childNodes[0].nodeValue;
-                    var apellido2 = array[i].getElementsByTagName('apellido2')[0].childNodes[0].nodeValue;
-                    var contenido = array[i].getElementsByTagName('contenido')[0].childNodes[0].nodeValue;
-                    var fechaCreacion = array[i].getElementsByTagName('fechaCreacion')[0].childNodes[0].nodeValue;
-                    var idAnuncio = array[i].getElementsByTagName('idAnuncio')[0].childNodes[0].nodeValue;
-                    var idAutor = array[i].getElementsByTagName('idAutor')[0].childNodes[0].nodeValue;
-                    var nombre = array[i].getElementsByTagName('nombre')[0].childNodes[0].nodeValue;
-                    var titulo = array[i].getElementsByTagName('titulo')[0].childNodes[0].nodeValue;
-                  
-                    var date = new Date(fechaCreacion);
-                    var dia = date.getDate();
-                    var mes = date.getMonth() + 1;
-                    var year = date.getFullYear();
-                    var hora = date.getHours();
-                    var minutos = date.getMinutes();
-                    var str_fecha = dia + '/' + mes + '/' + year;
-                    var otro = minutos;
-                    var str_minutos = String(minutos);  
-                    if(str_minutos == 0){
-                      otro = '0' + minutos;
+//////////////////////////////    EVENTOS    /////////////////////
+
+  app.controller('EventosCtrl', function($scope, $timeout, $state, $ionicPopup, Peticiones) {
+        $scope.$on('$ionicView.enter', function(){
+            $scope.translateView = function(nombre) {
+                return translate(nombre);
+            }
+        });
+  });
+
+  //////////////////////////////    EVENTOS-DESTACADOS    /////////////////////
+
+  app.controller('EventosDestacadosCtrl', function($scope, $timeout, $state, $ionicPopup, Peticiones) {
+        $scope.$on('$ionicView.enter', function(){
+            recogerEventosImportantes();
+            $scope.translateView = function(nombre) {
+                return translate(nombre);
+            }
+            $timeout(function callAtTimeout() {
+            }, 1000);
+        });
+
+        function recogerEventosImportantes(){
+            $.when(Peticiones.GetEventosImportantes()).done(function(data, data2, data3){
+                var otro = data3.responseXML;
+                var array = otro.getElementsByTagName('item');
+                var arrayEventos = [];
+
+                if(array.length == 0){
+                    $scope.noDataDestacados = translate('NO-EVENTS-DESTACADOS');
+                } else{
+                    $scope.noDataDestacados = '';
+                }
+
+                for(i = 0; i < array.length ; i++){
+                    var objetoEventos = [];
+                    var eventoId = array[i].getElementsByTagName('event_id')[0].childNodes[0].nodeValue;
+                    var eventoName = array[i].getElementsByTagName('event_name')[0].innerHTML;
+                    var eventoStartTime = array[i].getElementsByTagName('event_start_time')[0].innerHTML;
+                    var eventoEndTime = array[i].getElementsByTagName('event_end_time')[0].innerHTML;
+                    var eventoStartDate = array[i].getElementsByTagName('event_start_date')[0].innerHTML;
+                    var eventoEndDate = array[i].getElementsByTagName('event_end_date')[0].innerHTML;
+                    var eventoContenido = array[i].getElementsByTagName('post_content')[0].innerHTML;
+                    var direccionLongitud = array[i].getElementsByTagName('location_longitude')[0].innerHTML;
+                    var direccionLatitud = array[i].getElementsByTagName('location_latitude')[0].innerHTML;
+                    var guid = array[i].getElementsByTagName('guid')[0].innerHTML;
+
+                    if(guid == ''){
+                        guid = translate('IMAGEN-POR-DEFECTO');
                     }
-                    
-                    objeto.nombre = nombre + ' ' + apellido1;
-                    objeto.titulo = titulo;
-                    objeto.contenido = contenido;
-                    objeto.fecha = str_fecha;
-                    objeto.hora = hora + ':' + str_minutos;
-                    objeto.idAutor = idAutor;
-                    objeto.apellido2 = apellido2;
 
-              }
-              $scope.datos = objeto;
-          })
-      }
+                    objetoEventos.eventoId = eventoId;
+                    objetoEventos.eventoName = eventoName;
+                    objetoEventos.eventoStartTime = eventoStartTime;
+                    objetoEventos.eventoEndTime = eventoEndTime;
+                    objetoEventos.eventoStartDate = eventoStartDate;
+                    objetoEventos.eventoEndDate = eventoEndDate;
+                    objetoEventos.eventoContenido = eventoContenido;
+                    objetoEventos.direccionLongitud = direccionLongitud;
+                    objetoEventos.direccionLatitud = direccionLatitud;
+                    objetoEventos.guid = guid;
+
+                    arrayEventos.push(objetoEventos);
+                }
+                $scope.datos = arrayEventos;
+
+            })
+        }
+
+        $scope.verEvento = function(id) {
+            localStorage.setItem('evento.id', id);
+            localStorage.setItem('evento.pantalla', '#/eventos-destacados');
+            $state.go('eventos-vista');
+        }
+
   })
-  .controller('BoletinesCtrl', function($scope, $state, Peticiones) {
-    $scope.$on('$ionicView.enter', function(){
-        console.log('Estoy en BoletinesCtrl');
-        var remember = localStorage.getItem('rememberMe');
-        console.log('El remember es: ' + remember);
-        mostrarBoletines(remember);
-    });
 
-    $scope.mandarBoletines = function(id){
-        console.log('El remember es: ' + id);
-        localStorage.setItem('idBoletin',id);
-        $state.go('mostrar-boletines');
-    }
+  //////////////////////////////    EVENTOS-PROXIMOS    /////////////////////
 
-    function mostrarBoletines(token){
-      $.when(Peticiones.GetTablonBoletines(token)).done(function(devuelto, data , data2){
-          var respuesta = data2.responseText;
-          var parser = new DOMParser();
-          var xmlDoc = parser.parseFromString(respuesta,"text/xml");
-          var array = xmlDoc.getElementsByTagName("return");
-          var arrayObj = [];
+  app.controller('EventosProximosCtrl', function($scope, $timeout, $state, $ionicPopup, Peticiones) {
+        $scope.$on('$ionicView.enter', function(){
+            recogerEventos();
+            $scope.translateView = function(nombre) {
+                return translate(nombre);
+            }
+            $timeout(function callAtTimeout() {
+            }, 2000);
+        });
 
-          for(i = 0; i < array.length ; i++){
-                var algo = [];
-                var apellido1 = array[i].getElementsByTagName('apellido1')[0].childNodes[0].nodeValue;
-                var apellido2 = array[i].getElementsByTagName('apellido2')[0].childNodes[0].nodeValue;
-                var fechaCreacion = array[i].getElementsByTagName('fechaCreacion')[0].childNodes[0].nodeValue;
-                var idAnuncio = array[i].getElementsByTagName('idAnuncio')[0].childNodes[0].nodeValue;
-                var idAutor = array[i].getElementsByTagName('idAutor')[0].childNodes[0].nodeValue;
-                var nombre = array[i].getElementsByTagName('nombre')[0].childNodes[0].nodeValue;
-                var titulo = array[i].getElementsByTagName('titulo')[0].childNodes[0].nodeValue;
-                var nick = array[i].getElementsByTagName('nick')[0].childNodes[0].nodeValue;
-               
-                var date = new Date(fechaCreacion);
-                var dia = date.getDate();
-                var mes = date.getMonth() + 1;
-                var year = date.getFullYear();
-                var hora = date.getHours();
-                var minutos = date.getMinutes();
-                var str_fecha = dia + '/' + mes + '/' + year;
-                var otro = minutos;
-                var str_minutos = String(minutos);  
-                if(str_minutos == 0){
-                  otro = '0' + minutos;
+        function recogerEventos(){
+            $.when(Peticiones.GetEventos()).done(function(data, data2, data3){
+                var otro = data3.responseXML;
+                var array = otro.getElementsByTagName('item');
+                var arrayEventos = [];
+
+                if(array.length == 0){
+                    $scope.noDataProximos = translate('NO-EVENTS-DESTACADOS');
+                } else{
+                    $scope.noDataProximos = '';
+                }
+
+                for(i = 0; i < array.length ; i++){
+                    var objetoEventos = [];
+                    var eventoId = array[i].getElementsByTagName('event_id')[0].childNodes[0].nodeValue;
+                    var eventoName = array[i].getElementsByTagName('event_name')[0].innerHTML;
+                    var eventoStartTime = array[i].getElementsByTagName('event_start_time')[0].innerHTML;
+                    var eventoEndTime = array[i].getElementsByTagName('event_end_time')[0].innerHTML;
+                    var eventoStartDate = array[i].getElementsByTagName('event_start_date')[0].innerHTML;
+                    var eventoEndDate = array[i].getElementsByTagName('event_end_date')[0].innerHTML;
+                    var eventoContenido = array[i].getElementsByTagName('post_content')[0].innerHTML;
+                    var direccionLongitud = array[i].getElementsByTagName('location_longitude')[0].innerHTML;
+                    var direccionLatitud = array[i].getElementsByTagName('location_latitude')[0].innerHTML;
+                    var guid = array[i].getElementsByTagName('guid')[0].innerHTML;
+
+                    if(guid == ''){
+                        guid = translate('IMAGEN-POR-DEFECTO');
+                    }
+
+                    objetoEventos.eventoId = eventoId;
+                    objetoEventos.eventoName = eventoName;
+                    objetoEventos.eventoStartTime = eventoStartTime;
+                    objetoEventos.eventoEndTime = eventoEndTime;
+                    objetoEventos.eventoStartDate = eventoStartDate;
+                    objetoEventos.eventoEndDate = eventoEndDate;
+                    objetoEventos.eventoContenido = eventoContenido;
+                    objetoEventos.direccionLongitud = direccionLongitud;
+                    objetoEventos.direccionLatitud = direccionLatitud;
+                    objetoEventos.guid = guid;
+
+
+                    arrayEventos.push(objetoEventos);
+                }
+
+                $scope.datos = arrayEventos;
+            })
+        }
+
+        $scope.verEvento = function(id) {
+            localStorage.setItem('evento.id', id);
+            localStorage.setItem('evento.pantalla', '#/eventos-proximos');
+            $state.go('eventos-vista');
+        }
+
+  })
+
+  //////////////////////////////    EVENTOS-HISTORICOS    /////////////////////
+
+  app.controller('EventosHistoricosCtrl', function($scope, $timeout, $state, $ionicPopup, Peticiones) {
+        $scope.$on('$ionicView.enter', function(){
+            var mes = localStorage.getItem('monthHistorico');
+            var year = localStorage.getItem('yearHistorico');
+
+            recogerEventosByMonth(mes, year);
+            $scope.translateView = function(nombre) {
+                return translate(nombre);
+            }
+            $timeout(function callAtTimeout() {
+            }, 2000);
+
+        });
+
+        function recogerEventosByMonth(month, year){
+            $.when(Peticiones.GetEventosByMonth(month, year)).done(function(data, data2, data3){
+                var otro = data3.responseXML;
+                var array = otro.getElementsByTagName('item');
+                var arrayEventos = [];
+
+                if(array.length == 0){
+                    $scope.noDataHistoricos = translate('NO-EVENTS-HISTORICOS');
+                } else{
+                    $scope.noDataHistoricos = '';
+                }
+
+                for(i = 0; i < array.length ; i++){
+                    var objetoEventos = [];
+                    var eventoId = array[i].getElementsByTagName('event_id')[0].childNodes[0].nodeValue;
+                    var eventoName = array[i].getElementsByTagName('event_name')[0].innerHTML;
+                    var eventoStartTime = array[i].getElementsByTagName('event_start_time')[0].innerHTML;
+                    var eventoEndTime = array[i].getElementsByTagName('event_end_time')[0].innerHTML;
+                    var eventoStartDate = array[i].getElementsByTagName('event_start_date')[0].innerHTML;
+                    var eventoEndDate = array[i].getElementsByTagName('event_end_date')[0].innerHTML;
+                    var eventoContenido = array[i].getElementsByTagName('post_content')[0].innerHTML;
+                    var direccionLongitud = array[i].getElementsByTagName('location_longitude')[0].innerHTML;
+                    var direccionLatitud = array[i].getElementsByTagName('location_latitude')[0].innerHTML;
+                    var guid = array[i].getElementsByTagName('guid')[0].innerHTML;
+
+                    if(guid == ''){
+                        guid = translate('IMAGEN-POR-DEFECTO');
+                    }
+
+                    objetoEventos.eventoId = eventoId;
+                    objetoEventos.eventoName = eventoName;
+                    objetoEventos.eventoStartTime = eventoStartTime;
+                    objetoEventos.eventoEndTime = eventoEndTime;
+                    objetoEventos.eventoStartDate = eventoStartDate;
+                    objetoEventos.eventoEndDate = eventoEndDate;
+                    objetoEventos.eventoContenido = eventoContenido;
+                    objetoEventos.direccionLongitud = direccionLongitud;
+                    objetoEventos.direccionLatitud = direccionLatitud;
+                    objetoEventos.guid = guid;
+
+                    arrayEventos.push(objetoEventos);
+                }
+
+                $scope.datos = arrayEventos;
+                return arrayEventos;
+            })
+        }
+
+        $scope.verEvento = function(id) {
+            localStorage.setItem('evento.id', id);
+            localStorage.setItem('evento.pantalla', '#/eventos-historicos');
+            $state.go('eventos-vista');
+        }
+
+        $scope.fijarMesHistorico = function(){
+            var numero = document.getElementById('selectHistorico');
+            var month = numero.options[numero.selectedIndex].value;
+            localStorage.setItem('monthHistorico', month);
+
+            var year = document.getElementById('selectYear').value;
+            localStorage.setItem('yearHistorico', year);
+
+            $state.go('eventos-historicos');
+        }
+
+  })
+
+  //////////////////////////////    EVENTOS-VISTA     /////////////////////
+
+  app.controller('EventosVistaCtrl', function($scope, $timeout, $state, $ionicPopup, Peticiones) {
+        $scope.$on('$ionicView.enter', function(){
+            var id = localStorage.getItem('evento.id');
+            $scope.pantalla = localStorage.getItem('evento.pantalla');
+            recogerEventosPorId(id);
+
+            $scope.translateView = function(nombre) {
+                return translate(nombre);
+            }
+
+            $timeout(function callAtTimeout() {
+            }, 1500);
+        });
+
+      function recogerEventosPorId(idEvento){
+          $.when(Peticiones.GetEventosById(idEvento)).done(function(devuelto, data , data2){
+                var otro = data2.responseText;
+                var parser = new DOMParser();
+                var xml = parser.parseFromString(otro, 'text/xml');
+                var array = xml.getElementsByTagName('return');
+                var objetoEventos = [];
+
+                if(array.length == 0){
+                    $scope.noData = translate('NO-EVENTS-DATA');
+                } else{
+                    $scope.noData = '';
+                }
+
+                for(i = 0; i < array.length ; i++){
+                    var eventoId = array[i].getElementsByTagName('event_id')[0].childNodes[0].nodeValue;
+                    var eventoName = array[i].getElementsByTagName('event_name')[0].innerHTML;
+                    var eventoStartTime = array[i].getElementsByTagName('event_start_time')[0].innerHTML;
+                    var eventoEndTime = array[i].getElementsByTagName('event_end_time')[0].innerHTML;
+                    var eventoStartDate = array[i].getElementsByTagName('event_start_date')[0].innerHTML;
+                    var eventoEndDate = array[i].getElementsByTagName('event_end_date')[0].innerHTML;
+                    var eventoContenido = array[i].getElementsByTagName('post_content')[0].innerHTML;
+                    var locationAddress = array[i].getElementsByTagName('location_address')[0].innerHTML;
+                    var direccionLongitud = array[i].getElementsByTagName('location_longitude')[0].innerHTML;
+                    var direccionLatitud = array[i].getElementsByTagName('location_latitude')[0].innerHTML;
+                    var locationTown = array[i].getElementsByTagName('location_town')[0].innerHTML;
+                    var guid = array[i].getElementsByTagName('guid')[0].innerHTML;
+                
+                    eventoContenido = eventoContenido.replace(/&gt;/g, '>');
+                    eventoContenido = eventoContenido.replace(/&lt;/g, '<');
+                    eventoContenido = eventoContenido.replace(/&quot;/g, '"');
+                    eventoContenido = eventoContenido.replace(/&apos;/g, "'");
+                    eventoContenido = eventoContenido.replace(/&amp;/g, '&');
+
+                    if(guid == ''){
+                        guid = translate('IMAGEN-POR-DEFECTO');
+                    }
+
+                    objetoEventos.eventoId = eventoId;
+                    objetoEventos.eventoName = eventoName;
+                    objetoEventos.eventoStartTime = eventoStartTime;
+                    objetoEventos.eventoEndTime = eventoEndTime;
+                    objetoEventos.eventoStartDate = eventoStartDate;
+                    objetoEventos.eventoEndDate = eventoEndDate;
+                    objetoEventos.eventoContenido = eventoContenido;
+                    objetoEventos.direccionLongitud = direccionLongitud;
+                    objetoEventos.direccionLatitud = direccionLatitud;
+                    objetoEventos.locationAddress = locationAddress;
+                    objetoEventos.locationTown = locationTown;
+                    objetoEventos.guid = guid;
+
+                    var direccionMaps = 'https://maps.google.com/maps?q=' + direccionLatitud + ',' + direccionLongitud + '&hl=es;z=14&amp;output=embed';
+
+                    objetoEventos.direccionMaps = direccionMaps;
+
+                    $scope.datos = objetoEventos;
                 }
                 
-                algo.fecha = str_fecha;
-                algo.titulo = titulo;
-                algo.nombre = nombre + ' ' + apellido1;
-                algo.id = idAnuncio;
-                arrayObj.push(algo);
-          }
+            })
+        }
 
-          $scope.datos = arrayObj;
-      })
-    }
-  })
-  .controller('MostrarBoletinesCtrl', function($scope, $state, Peticiones) {
+  });
+
+  //////////////////////////////    CALENDARIO     /////////////////////
+
+  app.controller('CalendarioCtrl', function($scope, $timeout, $state, Peticiones) {
+        var hoy, diasemhoy, diahoy, meshoy, annohoy, tit, ant, pos, f0, mescal, annocal, mesant, mespos, celda0, primeromes, prsem, diaprmes, prcelda, empezar, diames, fila, midia, mimes, mianno, celda, nuevomes, tiempounix, arrayEventos;
+        var meses = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
+        var lasemana = ["Domingo","Lunes","Martes","Miércoles","Jueves","Viernes","Sábado"];
+        var diassemana = ["L","M","X","J","V","S","D"];
+        var arrayEvent = [];
+
+        $scope.$on('$ionicView.enter', function(){
+                hoy = new Date();
+                diasemhoy = hoy.getDay();
+                diahoy = hoy.getDate();
+                meshoy = hoy.getMonth();
+                annohoy = hoy.getFullYear();
+                annocal = annohoy;
+                
+                var mes = meshoy+1;
+                recogerEventosByMonth(mes,annocal);
+                $scope.translateView = function(nombre) {
+                    return translate(nombre);
+                }
+                $timeout(function callAtTimeout() {
+                }, 2000);
+        });
+
+        function recogerEventosByMonth(mes, year){
+            $.when(Peticiones.GetEventosByMonth(mes, year)).done(function(data, data2, data3){
+                var otro = data3.responseXML;
+                var array = otro.getElementsByTagName('item');
+                var arrayEventos = [];
+
+                for(i = 0; i < array.length ; i++){
+                    var objetoEventos = [];
+                    var eventoId = array[i].getElementsByTagName('event_id')[0].childNodes[0].nodeValue;
+                    var eventoName = array[i].getElementsByTagName('event_name')[0].innerHTML;
+                    var eventoStartTime = array[i].getElementsByTagName('event_start_time')[0].innerHTML;
+                    var eventoEndTime = array[i].getElementsByTagName('event_end_time')[0].innerHTML;
+                    var eventoStartDate = array[i].getElementsByTagName('event_start_date')[0].innerHTML;
+                    var eventoEndDate = array[i].getElementsByTagName('event_end_date')[0].innerHTML;
+                    var eventoContenido = array[i].getElementsByTagName('post_content')[0].innerHTML;
+                    var direccionLongitud = array[i].getElementsByTagName('location_longitude')[0].innerHTML;
+                    var direccionLatitud = array[i].getElementsByTagName('location_latitude')[0].innerHTML;
+                    var guid = array[i].getElementsByTagName('guid')[0].innerHTML;
+                    var color = array[i].getElementsByTagName('grup_color')[0].innerHTML;
+
+                    if(guid == ''){
+                        guid = translate('IMAGEN-POR-DEFECTO');
+                    }
+
+                    objetoEventos.eventoId = eventoId;
+                    objetoEventos.eventoName = eventoName;
+                    objetoEventos.eventoStartTime = eventoStartTime;
+                    objetoEventos.eventoEndTime = eventoEndTime;
+                    objetoEventos.eventoStartDate = eventoStartDate;
+                    objetoEventos.eventoEndDate = eventoEndDate;
+                    objetoEventos.eventoContenido = eventoContenido;
+                    objetoEventos.direccionLongitud = direccionLongitud;
+                    objetoEventos.direccionLatitud = direccionLatitud;
+                    objetoEventos.color = color;
+                    objetoEventos.guid = guid;
+
+                    arrayEventos.push(objetoEventos);
+                }
+
+                $scope.datos = arrayEventos;
+                arrayEvent = arrayEventos;
+                mostrarCalendario();
+
+            })
+        }
+
+        function recogerEventosByMonth2(mes, year){
+            $.when(Peticiones.GetEventosByMonth(mes, year)).done(function(data, data2, data3){
+                var otro = data3.responseXML;
+                var array = otro.getElementsByTagName('item');
+
+                var arrayEventos = [];
+
+                for(i = 0; i < array.length ; i++){
+                    var objetoEventos = [];
+                    var eventoId = array[i].getElementsByTagName('event_id')[0].childNodes[0].nodeValue;
+                    var eventoName = array[i].getElementsByTagName('event_name')[0].innerHTML;
+                    var eventoStartTime = array[i].getElementsByTagName('event_start_time')[0].innerHTML;
+                    var eventoEndTime = array[i].getElementsByTagName('event_end_time')[0].innerHTML;
+                    var eventoStartDate = array[i].getElementsByTagName('event_start_date')[0].innerHTML;
+                    var eventoEndDate = array[i].getElementsByTagName('event_end_date')[0].innerHTML;
+                    var eventoContenido = array[i].getElementsByTagName('post_content')[0].innerHTML;
+                    var direccionLongitud = array[i].getElementsByTagName('location_longitude')[0].innerHTML;
+                    var direccionLatitud = array[i].getElementsByTagName('location_latitude')[0].innerHTML;
+                    var guid = array[i].getElementsByTagName('guid')[0].innerHTML;
+                    var color = array[i].getElementsByTagName('grup_color')[0].innerHTML;
+
+                    if(guid == ''){
+                        guid = translate('IMAGEN-POR-DEFECTO');
+                    }
+
+                    objetoEventos.eventoId = eventoId;
+                    objetoEventos.eventoName = eventoName;
+                    objetoEventos.eventoStartTime = eventoStartTime;
+                    objetoEventos.eventoEndTime = eventoEndTime;
+                    objetoEventos.eventoStartDate = eventoStartDate;
+                    objetoEventos.eventoEndDate = eventoEndDate;
+                    objetoEventos.eventoContenido = eventoContenido;
+                    objetoEventos.direccionLongitud = direccionLongitud;
+                    objetoEventos.direccionLatitud = direccionLatitud;
+                    objetoEventos.color = color;
+                    objetoEventos.guid = guid;
+
+                    arrayEventos.push(objetoEventos);
+                }
+
+                $scope.datos = arrayEventos;
+                arrayEvent = arrayEventos;
+                cabecera();
+                escribirdias();
+
+            })
+        }
+
+        function mostrarCalendario(){
+            tit = document.getElementById('titulos');
+            ant = document.getElementById('anterior');
+            pos = document.getElementById('posterior');
+            // Elementos del DOM en primera fila
+            f0 = document.getElementById('fila0');
+
+            mescal = meshoy;
+            annocal = annohoy;
+            //iniciar calendario:
+            cabecera();
+            primeralinea();
+            escribirdias();
+        }
+
+        function cabecera() {
+            tit.innerHTML = meses[mescal] + ' ' + annocal;
+            mesant = mescal - 1;
+            mespos = mescal + 1;
+            if (mesant < 0) {
+                mesant = 11;
+            }
+            if (mespos > 11) {
+                mespos = 0;
+            }
+            ant.innerHTML = meses[mesant];
+            pos.innerHTML = meses[mespos];
+        }
+        
+        function primeralinea() {
+            for (i = 0 ; i < 7 ; i++) {
+                celda0 = f0.getElementsByTagName('th')[i];
+                celda0.innerHTML = diassemana[i];
+            }
+         }
+
+         function escribirdias() {
+            //Buscar dia de la semana del dia 1 del mes:
+            primeromes = new Date(annocal,mescal,'1');
+            prsem = primeromes.getDay();
+            prsem--;
+
+            if (prsem == -1) {
+                prsem = 6;
+            }
+
+            //buscar fecha para primera celda:
+            diaprmes = primeromes.getDate();
+            prcelda = diaprmes-prsem;
+            empezar = primeromes.setDate(prcelda);
+            diames = new Date();
+            diames.setTime(empezar);
+            //Recorrer las celdas para escribir el día:
+            for (i = 1; i<7 ; i++) {
+                fila = document.getElementById('fila' + i);
+                for (j = 0; j < 7 ; j++) {
+                    midia = diames.getDate();
+                    mimes = diames.getMonth();
+                    mianno = diames.getFullYear();
+                    celda = fila.getElementsByTagName('td')[j];
+                    contenidoCelda = '<div>' + midia + '</div>';
+                    //pintar eventos
+                    for(k = 0 ; k < arrayEvent.length ; k ++){
+                        var ini = new Date(arrayEvent[k].eventoStartDate);
+                        var fin = new Date(arrayEvent[k].eventoEndDate);
+                        if(ini.getMonth() == mimes && (ini.getDate() >= midia && fin.getDate() <= midia) && ini.getFullYear() == annocal){
+                            celda.id = midia + '/' + mimes + '/' + annocal;
+                            contenidoCelda += '<div style="background-color: #' + arrayEvent[k].color + '; width: 9px; height: 9px; margin: 1px; float:left;"></div>';
+                        }
+                    }
+                    celda.innerHTML = contenidoCelda;
+                    //Recuperar estado inicial al cambiar de mes:
+                    celda.style.backgroundColor = '#9bf5ff';
+                    celda.style.color = '#492736';
+                    celda.style.border = '1px solid #fff';
+                    //domingos en rojo
+                    if (j == 6 || j == 5) { 
+                        celda.style.backgroundColor = '#E68D91';
+                    }
+                    //dias restantes del mes en gris
+                    if (mimes != mescal) {
+                        celda.style.color = '#a0babc';
+                    }
+                    //destacar la fecha actual
+                    if (mimes == meshoy && midia == diahoy && mianno == annohoy ) {
+                        celda.style.backgroundColor = '#fff';
+                        celda.style.border = '1px solid #A1A09F';
+                    }
+                    //pasar al siguiente día
+                    midia = midia+1;
+                    diames.setDate(midia);
+                }
+            }
+         }
+        
+         $scope.mostrarEventosPorDia = function(e) {
+            var HaHechoClick;
+            if (e == null) {
+                HaHechoClick = event.srcElement;
+            } else {
+                HaHechoClick = e.target;
+            }
+
+            if(HaHechoClick.id){
+                localStorage.setItem('fechaCalendario', HaHechoClick.id);
+                $state.go('calendario-mostrar');
+            }
+
+        }
+
+         $scope.mesantes = function() {
+            nuevomes = new Date();
+            primeromes--;
+            nuevomes.setTime(primeromes);
+            mescal = nuevomes.getMonth();
+            annocal = nuevomes.getFullYear();
+            var mes = mescal+1;
+            recogerEventosByMonth2(mes,annocal);
+         }
+
+         $scope.mesdespues = function() {
+            nuevomes = new Date();
+            tiempounix = primeromes.getTime();
+            tiempounix = tiempounix + (45*24*60*60*1000);
+            nuevomes.setTime(tiempounix);
+            mescal = nuevomes.getMonth();
+            annocal = nuevomes.getFullYear();
+            var mes = mescal+1;
+            recogerEventosByMonth2(mes,annocal);
+         }
+
+  });
+
+   //////////////////////////////    CALENDARIO-MOSTRAR     /////////////////////
+
+  app.controller('CalendarioMostrarCtrl', function($scope,$timeout, $state, Peticiones){
       $scope.$on('$ionicView.enter', function(){
-          console.log('Estoy en MostrarBoletinesCtrl');
-          var remember = localStorage.getItem('rememberMe');
-          var idAnuncio = localStorage.getItem('idAnuncio');
-          console.log('El remember es: ' + remember);
-          mostrarDatos(remember, idAnuncio);
+            var fecha = localStorage.getItem('fechaCalendario');
+            var day = fecha.split('/')[0];
+            var month = fecha.split('/')[1];
+            var year = fecha.split('/')[2];
+            month++;
+            $scope.date = day + '/' + month + '/' + year;
+            recogerEventosByDay(day, month, year);
+            $scope.translateView = function(nombre) {
+                return translate(nombre);
+            }
+            $timeout(function callAtTimeout() {
+            }, 1500);
       });
 
-      function mostrarDatos(token, id){
-          $.when(Peticiones.GetBoletinPorId(token,id)).done(function(devuelto, data , data2){
-              var respuesta = data2.responseText;
-              var parser = new DOMParser();
-              var xmlDoc = parser.parseFromString(respuesta,"text/xml");
-              var array = xmlDoc.getElementsByTagName("return");
-              var objeto = [];
+      function recogerEventosByDay(day, month, year){
+            $.when(Peticiones.GetEventosByMonth(month, year)).done(function(data, data2, data3){
+                var otro = data3.responseXML;
+                var array = otro.getElementsByTagName('item');
+                var arrayEventos = [];
+                
+                if(array.length == 0){
+                    $scope.noData = translate('NO-EVENTS-DAY');
+                } else{
+                    $scope.noData = '';
+                }
 
-              for(i = 0; i < array.length ; i++){
-                    var apellido1 = array[i].getElementsByTagName('apellido1')[0].childNodes[0].nodeValue;
-                    var apellido2 = array[i].getElementsByTagName('apellido2')[0].childNodes[0].nodeValue;
-                    var contenido = array[i].getElementsByTagName('contenido')[0].childNodes[0].nodeValue;
-                    var fechaCreacion = array[i].getElementsByTagName('fechaCreacion')[0].childNodes[0].nodeValue;
-                    var idAnuncio = array[i].getElementsByTagName('idAnuncio')[0].childNodes[0].nodeValue;
-                    var idAutor = array[i].getElementsByTagName('idAutor')[0].childNodes[0].nodeValue;
-                    var nombre = array[i].getElementsByTagName('nombre')[0].childNodes[0].nodeValue;
-                    var titulo = array[i].getElementsByTagName('titulo')[0].childNodes[0].nodeValue;
-                  
-                    var date = new Date(fechaCreacion);
-                    var dia = date.getDate();
-                    var mes = date.getMonth() + 1;
-                    var year = date.getFullYear();
-                    var hora = date.getHours();
-                    var minutos = date.getMinutes();
-                    var str_fecha = dia + '/' + mes + '/' + year;
-                    var otro = minutos;
-                    var str_minutos = String(minutos);  
-                    if(str_minutos == 0){
-                      otro = '0' + minutos;
+                for(i = 0; i < array.length ; i++){
+                    var objetoEventos = [];
+                    var eventoId = array[i].getElementsByTagName('event_id')[0].childNodes[0].nodeValue;
+                    var eventoName = array[i].getElementsByTagName('event_name')[0].innerHTML;
+                    var eventoStartTime = array[i].getElementsByTagName('event_start_time')[0].innerHTML;
+                    var eventoEndTime = array[i].getElementsByTagName('event_end_time')[0].innerHTML;
+                    var eventoStartDate = array[i].getElementsByTagName('event_start_date')[0].innerHTML;
+                    var eventoEndDate = array[i].getElementsByTagName('event_end_date')[0].innerHTML;
+                    var eventoContenido = array[i].getElementsByTagName('post_content')[0].innerHTML;
+                    var direccionLongitud = array[i].getElementsByTagName('location_longitude')[0].innerHTML;
+                    var direccionLatitud = array[i].getElementsByTagName('location_latitude')[0].innerHTML;
+                    var guid = array[i].getElementsByTagName('guid')[0].innerHTML;
+                    var fechaIni = new Date(eventoStartDate);
+                    var fechaFin = new Date(eventoEndDate);
+
+                    if(guid == ''){
+                        guid = translate('IMAGEN-POR-DEFECTO');
                     }
-                    
-                    objeto.nombre = nombre + ' ' + apellido1;
-                    objeto.titulo = titulo;
-                    objeto.contenido = contenido;
-                    objeto.fecha = str_fecha;
-                    objeto.hora = hora + ':' + str_minutos;
-                    objeto.idAutor = idAutor;
-                    objeto.apellido2 = apellido2;
 
-              }
-              $scope.datos = objeto;
-          })
-      }
+                    if(fechaIni.getDate() >= day && fechaFin.getDate() <= day){
+                        objetoEventos.eventoId = eventoId;
+                        objetoEventos.eventoName = eventoName;
+                        objetoEventos.eventoStartTime = eventoStartTime;
+                        objetoEventos.eventoEndTime = eventoEndTime;
+                        objetoEventos.eventoStartDate = eventoStartDate;
+                        objetoEventos.eventoEndDate = eventoEndDate;
+                        objetoEventos.eventoContenido = eventoContenido;
+                        objetoEventos.direccionLongitud = direccionLongitud;
+                        objetoEventos.direccionLatitud = direccionLatitud;
+                        objetoEventos.guid = guid;
+
+                        arrayEventos.push(objetoEventos);
+                    }
+                }
+                $scope.datos = arrayEventos;
+                return arrayEventos;
+
+            })
+        }
+
+        $scope.verEvento = function(id) {
+            localStorage.setItem('evento.id', id);
+            localStorage.setItem('evento.pantalla', '#/calendario-mostrar');
+            $state.go('eventos-vista');
+        }
   })
 
+   //////////////////////////////    FORUM     /////////////////////
+
+  app.controller('ForumCtrl', function($scope, $state, $ionicPopup, Peticiones, $ionicModal) {
+      $scope.$on('$ionicView.enter', function(){
+
+            $scope.translateView = function(nombre) {
+                return translate(nombre);
+            }
+      });
+
+      $scope.mostrarComoLlegar = function() {
+          $.when(Peticiones.GetComoLlegar()).done(function(devuelto, data , data2){
+                var otro = data2.responseText;
+                var parser = new DOMParser();
+                var xml = parser.parseFromString(otro, 'text/xml');
+                var array = xml.getElementsByTagName('item');
+                var objetoEventos = [];
+
+                for(i = 0; i < array.length ; i++){
+                    var menuTitulo = array[i].getElementsByTagName('menu_titulo')[0].childNodes[0].nodeValue;
+                    var menuEnlace = array[i].getElementsByTagName('menu_enlace')[0].innerHTML;
+
+                    objetoEventos.menuTitulo = menuTitulo;
+                    objetoEventos.menuEnlace = menuEnlace;
+
+                    cordova.InAppBrowser.open(menuEnlace, '_system', 'location=yes');
+                }
+          })
+       }
+
+       $scope.mostrarFotos = function() {
+          $.when(Peticiones.GetFotos()).done(function(devuelto, data , data2){
+                var otro = data2.responseText;
+                var parser = new DOMParser();
+                var xml = parser.parseFromString(otro, 'text/xml');
+                var array = xml.getElementsByTagName('item');
+                var arrayFotos = [];
+
+                for(i = 0; i < array.length ; i++){
+                    var objetoFotos = [];
+                    var hrefHref = array[i].getElementsByTagName('href_href')[0].childNodes[0].nodeValue;
+                    var hrefTexto = array[i].getElementsByTagName('href_texto')[0].innerHTML;
+
+                    objetoFotos.hrefHref = hrefHref;
+                    objetoFotos.hrefTexto = hrefTexto;
+
+                    cordova.InAppBrowser.open(hrefHref, '_system', 'location=yes');
+                }
+          })
+       }
+
+       $scope.abrirModal = function() {
+           mostrarModalValoraciones($scope, Peticiones, $ionicModal);
+       }
+
+       $scope.mostrarAgenda = function() {
+          $.when(Peticiones.GetAgenda()).done(function(devuelto, data , data2){
+                var otro = data2.responseText;
+                var parser = new DOMParser();
+                var xml = parser.parseFromString(otro, 'text/xml');
+                var array = xml.getElementsByTagName('item');
+
+                for(i = 0; i < array.length ; i++){
+                    var objetoAgenda = [];
+                    var menuTitulo = array[i].getElementsByTagName('menu_titulo')[0].childNodes[0].nodeValue;
+                    var menuEnlace = array[i].getElementsByTagName('menu_enlace')[0].innerHTML;
+
+                    objetoAgenda.menuTitulo = menuTitulo;
+                    objetoAgenda.menuEnlace = menuEnlace;
+                    
+                    cordova.InAppBrowser.open(menuEnlace, '_system', 'location=yes');
+                }
+
+          })
+       }
+
+  });
+
+  //////////////////////////////    SESIONES MAGISTRALES     /////////////////////
+
+  app.controller('SesionesMagistralesCtrl', function($scope, $timeout, $state, $ionicModal, $ionicPopup, Peticiones) {
+      $scope.$on('$ionicView.enter', function(){
+            mostrarMagistrales($scope, Peticiones);
+            $scope.translateView = function(nombre) {
+                return translate(nombre);
+            }
+            $timeout(function callAtTimeout() {
+            }, 1000);
+      });
+
+      $scope.abrirModal = function(id){
+            mostrarModal($scope, $ionicModal, Peticiones, id, 4);
+      }
+
+  });
+
+  //////////////////////////////    SESIONES DEMO  -->  ID = 1     /////////////////////
+
+  app.controller('SesionesDemoCtrl', function($scope, $ionicModal, $timeout, $state, $ionicPopup, Peticiones) {
+      $scope.$on('$ionicView.enter', function(){
+            mostrarSesionByType($scope, Peticiones, 1);
+            $scope.translateView = function(nombre) {
+                return translate(nombre);
+            }
+            $timeout(function callAtTimeout() {
+            }, 1000);
+      });
+
+      $scope.abrirModal = function(id){
+            mostrarModal($scope, $ionicModal, Peticiones, id, 3);
+      }
+
+  });
+
+  //////////////////////////////    FORUM EMPLEO  -->  ID = 2     /////////////////////
+
+  app.controller('SesionesEmpleoCtrl', function($scope, $ionicModal, $timeout, $state, $ionicPopup, Peticiones) {
+      $scope.$on('$ionicView.enter', function(){
+            mostrarSesionByType($scope, Peticiones, 2);
+            $scope.translateView = function(nombre) {
+                return translate(nombre);
+            }
+            $timeout(function callAtTimeout() {
+            }, 1000);
+      });
+
+      $scope.abrirModal = function(id){
+            mostrarModal($scope, $ionicModal, Peticiones, id, 3);
+      }
+
+  });
+
+  //////////////////////////////    SESIONES PARALELAS  -->  ID = 3      /////////////////////
+
+  app.controller('SesionesParalelasCtrl', function($scope, $ionicModal, $timeout, $state, Peticiones) {
+      $scope.$on('$ionicView.enter', function(){
+            mostrarSesionByType($scope, Peticiones, 3);
+            $scope.translateView = function(nombre) {
+                return translate(nombre);
+            }
+            $timeout(function callAtTimeout() {
+            }, 1000);
+      });
+
+      $scope.abrirModal = function(id){
+            mostrarModal($scope, $ionicModal, Peticiones, id, 3);
+      }
 
 
+  });
+
+  //////////////////////////////    SESIONES SAP  -->  ID = 4     ///////////////////////////
+
+  app.controller('SesionesSapCtrl', function($scope, $ionicModal, $timeout, $state, $ionicPopup, Peticiones) {
+      $scope.$on('$ionicView.enter', function(){
+            mostrarSesionByType($scope, Peticiones, 4);
+            $scope.translateView = function(nombre) {
+                return translate(nombre);
+            }
+            $timeout(function callAtTimeout() {
+            }, 1000);
+      });
+
+      $scope.abrirModal = function(id){
+            mostrarModal($scope, $ionicModal, Peticiones, id, 3);
+      }
+
+  });
+
+  /////////////////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////////////////////////////////
+  //////////////////////                  FUNCIONES                  //////////////////////
+  /////////////////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////////////////////////////////
+
+  function mostrarSesionByType($scope, Peticiones, tipo) {
+    $.when(Peticiones.GetSessionsByType(tipo)).done(function(devuelto, data , data2){
+        var otro = data2.responseText;
+        var parser = new DOMParser();
+        var xml = parser.parseFromString(otro, 'text/xml');
+        var array = xml.getElementsByTagName('item');
+
+        var fechaAnterior = "";
+        var horaAnterior = "";
+        var idAnterior = "";
+            
+        var arrayCalendario = [];
+        var arrayHoras = [];
+        var arraySesiones = [];
+
+        if(array.length == 0){
+            $scope.noDataSesiones = translate('NO-SESSIONS-DATA');
+        } else{
+            $scope.noDataSesiones = '';
+        }
+
+        for(i = 0; i < array.length ; i++){
+            var objetoSesiones = [];
+            var objetoHora = [];
+            var objetoCalendario = [];
+            var sesiId = array[i].getElementsByTagName('sesi_id')[0].childNodes[0].nodeValue;
+            var sesiDiaIni = array[i].getElementsByTagName('sesi_dia_inicio')[0].innerHTML;
+            var sesiDiaFin = array[i].getElementsByTagName('sesi_dia_fin')[0].innerHTML;
+            var sesiImagen = array[i].getElementsByTagName('sesi_imagen')[0].innerHTML;
+            var sesiEmpresa = array[i].getElementsByTagName('sesi_empresa')[0].innerHTML;
+            var sesiResumen = array[i].getElementsByTagName('sesi_resumen')[0].innerHTML;
+            var sesiPeso = array[i].getElementsByTagName('sesi_peso')[0].innerHTML;
+
+            var dateActual = new Date(sesiDiaIni);
+
+            var fechaActual = dateActual.getDate() + '/' + dateActual.getMonth() + '/' + dateActual.getFullYear();
+
+            if(dateActual.getMinutes() == 0){
+                var horaActual = dateActual.getHours() + ':0' + dateActual.getMinutes();
+            }else{
+                var horaActual = dateActual.getHours() + ':' + dateActual.getMinutes();
+            }
+
+            var contador = i;
+            var contador1 = array.length - 1;
+
+            objetoSesiones.sesiId = sesiId;
+            objetoSesiones.sesiDiaIni = sesiDiaIni;
+            objetoSesiones.sesiDiaFin = sesiDiaFin;
+            objetoSesiones.sesiImagen = sesiImagen;
+            objetoSesiones.sesiEmpresa = sesiEmpresa;
+            objetoSesiones.sesiResumen = sesiResumen;
+            objetoSesiones.sesiPeso = sesiPeso;
+            objetoSesiones.idAnterior = idAnterior;
+
+            if((horaActual != horaAnterior || fechaActual != fechaAnterior || (i == (array.length-1)) ) && i != 0){
+                if(i == (array.length-1)){
+                    arraySesiones.push(objetoSesiones);
+                }
+
+                objetoHora.hora = horaAnterior;
+                objetoHora.sesiones = arraySesiones;  
+                arraySesiones = [];
+
+                arrayHoras.push(objetoHora);
+            }
+
+            arraySesiones.push(objetoSesiones);
+
+            if(fechaActual != fechaAnterior || (i == (array.length-1)) ){
+                objetoCalendario.fecha = fechaAnterior;
+                objetoCalendario.horas = arrayHoras;
+                arrayHoras = [];
+
+                arrayCalendario.push(objetoCalendario);
+            }
+
+            fechaAnterior = fechaActual;
+            horaAnterior = horaActual;
+            idAnterior = sesiId;
+
+        }
+
+        $scope.datos = arrayCalendario;
+    })
+}
+
+function mostrarMagistrales($scope, Peticiones) {
+    $.when(Peticiones.GetSessionsMagistrales()).done(function(devuelto, data , data2){
+        var otro = data2.responseText;
+        var parser = new DOMParser();
+        var xml = parser.parseFromString(otro, 'text/xml');
+        var array = xml.getElementsByTagName('item');
+        var arraySesiones = [];
+
+        if(array.length == 0){
+            $scope.noDataMagistrales = translate('NO-SESSIONS-MAGISTRALES');
+        } else{
+            $scope.noDataMagistrales = '';
+        }
+
+        for(i = 0; i < array.length ; i++){
+            var objetoSesiones = [];
+            var semaId = array[i].getElementsByTagName('sema_id')[0].childNodes[0].nodeValue;
+            var semaImagen = array[i].getElementsByTagName('sema_imagen')[0].innerHTML;
+            var semaUrl = array[i].getElementsByTagName('sema_url')[0].innerHTML;
+            var semaTitulo = array[i].getElementsByTagName('sema_titulo')[0].innerHTML;
+            var semaAutor = array[i].getElementsByTagName('sema_autor')[0].innerHTML;
+            var semaProfesion = array[i].getElementsByTagName('sema_profesion')[0].innerHTML;
+            var semaFrase = array[i].getElementsByTagName('sema_frase')[0].innerHTML;
+            var semaPeso = array[i].getElementsByTagName('sema_peso')[0].innerHTML;
+
+            objetoSesiones.semaId = semaId;
+            objetoSesiones.semaImagen = semaImagen;
+            objetoSesiones.semaUrl = semaUrl;
+            objetoSesiones.semaTitulo = semaTitulo;
+            objetoSesiones.semaAutor = semaAutor;
+            objetoSesiones.semaProfesion = semaProfesion;
+            objetoSesiones.semaFrase = semaFrase;
+            objetoSesiones.semaPeso = semaPeso;
+
+            arraySesiones.push(objetoSesiones);
+        }
+
+        $scope.datos = arraySesiones;
+    })
+}
+
+function mostrarEnlaces($scope, Peticiones, idSesion, idTipo){
+    $.when(Peticiones.GetHref(idSesion, idTipo)).done(function(devuelto, data , data2){
+        var otro = data2.responseText;
+        var parser = new DOMParser();
+        var xml = parser.parseFromString(otro, 'text/xml');
+        var array = xml.getElementsByTagName('item');
+        var arraySesiones = [];
+
+        for(i = 0; i < array.length ; i++){
+            var objetoSesiones = [];
+            var enlaceEnlace = array[i].getElementsByTagName('href_href')[0].innerHTML;
+            var tituloEnlace = array[i].getElementsByTagName('href_texto')[0].innerHTML;
+            var tituloSesion = array[i].getElementsByTagName('sesi_sesion')[0].innerHTML;
+            var imagenSesion = array[i].getElementsByTagName('sesi_imagen')[0].innerHTML;
+
+            objetoSesiones.enlaceEnlace = enlaceEnlace;
+            objetoSesiones.tituloEnlace = tituloEnlace;
+            objetoSesiones.tituloSesion = tituloSesion;
+            objetoSesiones.imagenSesion = 'http://ausape.com' + imagenSesion;
+
+            if(enlaceEnlace == ''){
+                $scope.noDataModal = translate('NO-ENLACES-DATA');
+            } else{
+                $scope.noDataModal = '';
+            }
+
+            arraySesiones.push(objetoSesiones);
+        }
+
+        $scope.enlaces = arraySesiones;
+        $scope.tituloSesion = arraySesiones[0].tituloSesion;
+        $scope.imagenSesion = arraySesiones[0].imagenSesion;
+    })
+}
+
+function mostrarModal($scope, $ionicModal, Peticiones, idSesion, idTipo){
+    $scope.translateView = function(nombre) {
+        return translate(nombre);
+    } 
+    $scope.modal = $ionicModal.fromTemplateUrl('templates/sesionModal.html', {
+        scope: $scope,
+        animation: 'slide-in'
+    }).then(function(modal) { 
+        $scope.modal = modal;
+    });
+
+    $scope.abrirModal = function(id) {
+        $scope.modal.show();
+        mostrarEnlaces($scope, Peticiones, id, idTipo);
+    };
+
+    $scope.verEnlace = function(url) {
+        cordova.InAppBrowser.open(url, '_system', 'location=yes');
+    }
+
+    $scope.cerrarModal = function() {
+        $scope.enlaces = "";
+        $scope.modal.hide();
+    };
+
+    $scope.$on('$destroy', function() {
+        $scope.modal.remove();
+    });
+        
+    // Execute action on hide modal
+    $scope.$on('modal.hidden', function() {
+        // Execute action
+    });
+        
+    // Execute action on remove modal
+    $scope.$on('modal.removed', function() {
+        // Execute action
+    });
+}
+
+function mostrarModalValoraciones($scope, Peticiones, $ionicModal){
+    $scope.modal = $ionicModal.fromTemplateUrl('templates/sesionModal.html', {
+        scope: $scope,
+        animation: 'slide-in'
+    }).then(function(modal) { 
+        $scope.modal = modal;
+    });
+
+    $scope.abrirModal = function() {
+        $scope.modal.show();
+        mostrarValoraciones($scope, Peticiones);
+    };
+
+    $scope.verEnlace = function(url) {
+        cordova.InAppBrowser.open(url, '_system', 'location=yes');
+    }
+
+    $scope.cerrarModal = function() {
+        $scope.enlaces = "";
+        $scope.modal.hide();
+    };
+
+    $scope.$on('$destroy', function() {
+        $scope.modal.remove();
+    });
+        
+    // Execute action on hide modal
+    $scope.$on('modal.hidden', function() {
+        // Execute action
+    });
+        
+    // Execute action on remove modal
+    $scope.$on('modal.removed', function() {
+        // Execute action
+    });
+}
+
+function mostrarValoraciones($scope, Peticiones) {
+    $.when(Peticiones.GetValoraciones()).done(function(devuelto, data , data2){
+        var otro = data2.responseText;
+        var parser = new DOMParser();
+        var xml = parser.parseFromString(otro, 'text/xml');
+        var array = xml.getElementsByTagName('item');
+        var arrayValoraciones = [];
+
+        if(array.length == 0){
+            $scope.noDataModal = translate('NO-VALORATIONS-DATA');
+        } else{
+            $scope.noDataModal = '';
+        }
+
+        for(i = 0; i < array.length ; i++){
+            var objetoValoraciones = [];
+            var hrefHref = array[i].getElementsByTagName('href_href')[0].childNodes[0].nodeValue;
+            var hrefTexto = array[i].getElementsByTagName('href_texto')[0].innerHTML;
+
+            objetoValoraciones.enlaceEnlace = hrefHref;
+            objetoValoraciones.tituloEnlace = hrefTexto;
+
+            if(hrefHref == ''){
+                $scope.noDataModal = translate('NO-ENLACES-DATA');
+            } else{
+                $scope.noDataModal = '';
+            }
+
+            arrayValoraciones.push(objetoValoraciones);
+        }
+        $scope.enlaces = arrayValoraciones;
+        $scope.imagenSesion = translate('FORUM-MENU-VALORACION-IMAGE');
+        $scope.tituloSesion = translate('FORUM-MENU-VALORACION');
+    })
+}
+
+function translate(nombre){
+    var request = new XMLHttpRequest();
+    request.open("GET", "locales/local-es.json", false);
+    request.send();
+    var jchon = JSON.parse(request.responseText);
+    return jchon[nombre];
+}
+    
+
+  ///////// FIN //////////
 
 
-  ////fin/////
-;

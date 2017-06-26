@@ -1,92 +1,20 @@
-<ion-view >
-    <ion-nav-bar class="bar-positive" align-title="center">
+<ion-view>
+    <ion-nav-bar align-title="center">
         <ion-nav-buttons>
-            <a ng-click="cerrarSesion()"><i class="fa fa-power-off" aria-hidden="true"></i></a>
         </ion-nav-buttons>
-        <ion-nav-title><a menu-toggle="right"><img style="width: auto; height: 40px;" src="img/icono.png"/></a></ion-nav-title>
+        <ion-nav-title><a class="btnAtras"><img src="img/logoAusape.png"/></a></ion-nav-title>
         <ion-nav-buttons side="right">
-            <div ><a ><i class="fa fa-bars" aria-hidden="true"></i></a></div>
         </ion-nav-buttons>
     </ion-nav-bar>
     <ion-content>
-        <div class="contenedor">
-            <center><h2>Menú</h2></center>
-            <a class="boton" href="#/novedades">
-                <div class="caja_resultados mitad negativo">
-                    <div class="icono">
-                        <i class="fa fa-clock-o" aria-hidden="true"></i>
-                    </div>
-                    <div class="opcion_resultados">
-                        <p>Novedades</p>
-                    </div>
-                </div>
-            </a>
-
-            <a class="boton" href="#/anuncios">
-                <div class="caja_resultados mitad negativo">
-                    <div class="icono">
-                        <i class="fa fa-picture-o" aria-hidden="true"></i>
-                    </div>
-                    <div class="opcion_resultados">
-                        <p>Anuncios</p>
-                    </div>
-                </div>
-            </a>
-
-            <a class="boton" href="#/boletines">
-                <div class="caja_resultados mitad negativo">
-                    <div class="icono">
-                        <i class="fa fa-file-text-o" aria-hidden="true"></i>
-                    </div>
-                    <div class="opcion_resultados">
-                        <p>Boletín</p>
-                    </div>
-                </div>
-            </a>
-
-            <a class="boton" href="#/servicios">
-                <div class="caja_resultados mitad negativo">
-                    <div class="icono">
-                        <i class="fa fa-cogs" aria-hidden="true"></i>
-                    </div>
-                    <div class="opcion_resultados">
-                        <p>Servicios</p>
-                    </div>
-                </div>
-            </a>
-
-            <a class="boton" href="#/fiestas">
-                <div class="caja_resultados mitad negativo">
-                    <div class="icono">
-                        <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                    </div>
-                    <div class="opcion_resultados">
-                        <p>Fiestas</p>
-                    </div>
-                </div>
-            </a> 
-
-            <a class="boton" href="#/hemeroteca">
-                <div class="caja_resultados mitad negativo">
-                    <div class="icono">
-                        <i class="fa fa-book" aria-hidden="true"></i>
-                    </div>
-                    <div class="opcion_resultados">
-                        <p>Hemeroteca</p>
-                    </div>
-                </div>
-            </a>
-
-            <a class="boton" href="#">
-                <div class="caja_resultados mitad negativo">
-                    <div class="icono">
-                        <i class="fa fa-user-circle" aria-hidden="true"></i>
-                    </div>
-                    <div class="opcion_resultados">
-                        <p>Mi Cuenta</p>
-                    </div>
-                </div>
-            </a>
-        </div>
+        <div class="contenedor-menu">
+            <center><h2>{{saludo}}</h2></center>
+            <a href="#/eventos" ><button class="boton_menu">{{translateView('MENU-EVENTOS-TITLE')}}</button></a>
+            <a href="#/calendario" ><button class="boton_menu">{{translateView('MENU-CALENDARIO-TITLE')}}</button></a>
+            <a ng-if="fechaActual < fechaFin" href="#/forum" ><button class="boton_menu"><p>{{translateView('MENU-FORUM-TITLE')}}</p><p class="menu_subTitulo">{{translateView('MENU-FORUM-SUBTITLE')}}</p></button></a>
+		</div>
     </ion-content>
+    <ion-footer-bar class="hide-on-keyboard-open">
+        <div class="pie interiores"></div>
+    </ion-footer-bar>
 </ion-view>

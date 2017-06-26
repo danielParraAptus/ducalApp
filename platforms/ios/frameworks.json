@@ -1,5 +1,7 @@
 {
-    "libz.tbd": 1,
+    "libz.tbd": 2,
     "Security.framework": 1,
-    "SystemConfiguration.framework": 1
+    "SystemConfiguration.framework": 1,
+    "EventKit.framework": 1,
+    "EventKitUI.framework": 1
 }

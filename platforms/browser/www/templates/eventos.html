@@ -1,0 +1,21 @@
+<ion-view>
+    <ion-nav-bar align-title="center">
+        <ion-nav-buttons>
+           <div><a href="#/menu" class="btnAtras"><i class="fa fa-arrow-left" aria-hidden="true"></i></a></div>
+        </ion-nav-buttons>
+        <ion-nav-title><a class="btnAtras"><img style="width: auto; height: 40px;" src="img/logoAusape.png"/></a></ion-nav-title>
+        <ion-nav-buttons side="right">
+        </ion-nav-buttons>
+    </ion-nav-bar>
+    <ion-content>
+        <center><h2>{{translateView('MENU-EVENTOS-TITLE')}}</h2></center>
+        <div class="contenedor-menu">
+            <a href="#/eventos-destacados" ><button class="boton_menu">{{translateView('EVENTS-DESTACADOS-TITLE')}}</button></a>
+            <a href="#/eventos-proximos" ><button class="boton_menu">{{translateView('EVENTS-PROXIMOS-TITLE')}}</button></a>
+            <a href="#/eventos-seleccionar-historicos" ><button class="boton_menu">{{translateView('EVENTS-HISTORICOS-TITLE')}}</button></a>
+		</div>
+    </ion-content>
+    <ion-footer-bar class="hide-on-keyboard-open">
+        <div class="pie interiores"></div>
+    </ion-footer-bar>
+</ion-view>

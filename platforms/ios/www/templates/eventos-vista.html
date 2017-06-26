@@ -1,0 +1,59 @@
+<ion-view>
+    <ion-nav-bar align-title="center">
+        <ion-nav-buttons>
+            <div><a class="izquierda btnAtras" href="{{pantalla}}"><i class="fa fa-arrow-left" aria-hidden="true"></i></a></div>
+        </ion-nav-buttons>
+        <ion-nav-title><a class="btnAtras"><img style="width: auto; height: 40px;" src="img/logoAusape.png"/></a></ion-nav-title>
+        <ion-nav-buttons side="right">
+        </ion-nav-buttons>
+    </ion-nav-bar>
+    <ion-content>
+        <div class="paginas">
+            <div class="bloque_contenido titular">
+                <h2>
+                    <span ng-bind-html="datos.eventoName"></span>
+                </h2>
+            </div>
+            
+            <div class="bloque_contenido sombreado">
+                <img class="img_completa" src="{{datos.guid}}" alt="">
+            </div>
+
+            <div class="bloque_contenido caracteristicas">
+                <p>
+                    <h3>{{translateView('EVENTS-VIEW-DESDE')}}</h3>
+                    <span>{{datos.eventoStartDate}}</span>
+                    <span>{{datos.eventoStartTime}}</span>
+                </p>
+                <p>
+                    <h3>{{translateView('EVENTS-VIEW-HASTA')}}</h3>
+                    <span>{{datos.eventoEndDate}}</span>
+                    <span>{{datos.eventoEndTime}}</span>
+                </p>
+            </div>
+
+            <div class="bloque_contenido resumen">
+                <p>
+                    <h3>{{translateView('EVENTS-VIEW-RESUMEN')}}</h3>
+                    <span style="padding: 15px;" class="contenido-evento-resumen" ng-bind-html="datos.eventoContenido"></span>
+                </p>
+            </div>
+
+            <div class="bloque_contenido direccion" ng-if="datos.direccionLongitud && datos.direccionLatitud">
+                <p>
+                    <h3>{{translateView('EVENTS-VIEW-DIRECCION')}}</h3>
+                    <span>{{datos.locationAddress}} - {{datos.locationTown}}</span>
+                </p>
+            </div>
+            
+            <div class="bloque_contenido sombreado resumen" ng-if="datos.eventoId == 3">
+                <p>
+                    <strong><a href="#/forum" style="text-decoration: none;">{{translateView('EVENTS-VIEW-ENTRAR')}}</a></strong>
+                </p>
+            </div>
+        </div>
+    </ion-content>
+    <ion-footer-bar class="hide-on-keyboard-open">
+        <div class="pie interiores"></div>
+    </ion-footer-bar>
+</ion-view>

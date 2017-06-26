@@ -1,0 +1,45 @@
+<ion-view>
+    <ion-nav-bar align-title="center">
+        <ion-nav-buttons>
+           <div><a href="#/menu" class="btnAtras"><i class="fa fa-arrow-left" aria-hidden="true"></i></a></div>
+        </ion-nav-buttons>
+        <ion-nav-title><a class="btnAtras"><img style="width: auto; height: 40px;" src="img/logoAusape.png"/></a></ion-nav-title>
+        <ion-nav-buttons side="right">
+        </ion-nav-buttons>
+    </ion-nav-bar>
+    <ion-content>
+        <center><h2>Forum Ausape 2017</h2></center>
+        <div class="contenedor-menu">
+            <center>
+            <a href="#/sesiones-magistrales" ><button class="boton_menu_forum" ng-bind-html="translateView('FORUM-MENU-MAGISTRALES')"></button></a>
+            <a href="#/sesiones-paralelas" ><button class="boton_menu_forum" ng-bind-html="translateView('FORUM-MENU-PARALELAS')"></button></a>
+            <a href="#/sesiones-demo" ><button class="boton_menu_forum" ng-bind-html="translateView('FORUM-MENU-DEMO-HTML')"></button></a>
+            <a href="#/sesiones-sap" ><button class="boton_menu_forum" ng-bind-html="translateView('FORUM-MENU-SAP-HTML')"></button></a>
+            <a href="#/sesiones-empleo" ><button class="boton_menu_forum" ng-bind-html="translateView('FORUM-MENU-EMPLEO-HTML')"></button></a>
+            </center>
+
+            <div class="contenedor_cajas">
+                <div ng-click="mostrarComoLlegar()" class="caja_menu">
+                    <i class="fa fa-map-marker" aria-hidden="true"></i>
+                    <spam>{{translateView('FORUM-MENU-LLEGAR')}}</spam>
+                </div>
+                <div ng-click="mostrarFotos()" class="caja_menu">
+                    <i class="fa fa-picture-o" aria-hidden="true"></i>
+                    <spam>{{translateView('FORUM-MENU-FOTOS')}}</spam>
+                </div>
+                <div ng-click="abrirModal()" class="caja_menu">
+                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                    <spam>{{translateView('FORUM-MENU-VALORACION')}}</spam>
+                </div>
+                <div ng-click="mostrarAgenda()" class="caja_menu">
+                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                    <spam>{{translateView('FORUM-MENU-AGENDA')}}</spam>
+                </div>
+            </div>
+
+		</div>
+    </ion-content>
+    <ion-footer-bar class="hide-on-keyboard-open">
+        <div class="pie interiores"></div>
+    </ion-footer-bar>
+</ion-view>

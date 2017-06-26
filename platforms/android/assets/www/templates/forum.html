@@ -1,0 +1,45 @@
+<ion-view>
+    <ion-nav-bar align-title="center">
+        <ion-nav-buttons>
+           <div><a href="#/menu" class="btnAtras"><i class="fa fa-arrow-left" aria-hidden="true"></i></a></div>
+        </ion-nav-buttons>
+        <ion-nav-title><a class="btnAtras"><img src="img/logoAusape.png"/></a></ion-nav-title>
+        <ion-nav-buttons side="right">
+        </ion-nav-buttons>
+    </ion-nav-bar>
+    <ion-content>
+        <center><h2>Forum Ausape 2017</h2></center>
+        <div class="contenedor-menu">
+            <center>
+            <a href="#/sesiones-magistrales" ><button class="boton_menu_forum" ng-bind-html="translateView('FORUM-MENU-MAGISTRALES')"></button></a>
+            <a href="#/sesiones-paralelas" ><button class="boton_menu_forum" ng-bind-html="translateView('FORUM-MENU-PARALELAS')"></button></a>
+            <a href="#/sesiones-demo" ><button class="boton_menu_forum" ng-bind-html="translateView('FORUM-MENU-DEMO-HTML')"></button></a>
+            <a href="#/sesiones-sap" ><button class="boton_menu_forum" ng-bind-html="translateView('FORUM-MENU-SAP-HTML')"></button></a>
+            <a href="#/sesiones-empleo" ><button class="boton_menu_forum" ng-bind-html="translateView('FORUM-MENU-EMPLEO-HTML')"></button></a>
+            </center>
+
+            <div class="contenedor_cajas">
+                <div ng-click="mostrarEmpresasInscritas()" class="caja_menu">
+                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                    <spam>{{translateView('FORUM-MENU-EMPRESAS')}}</spam>
+                </div>
+                <div ng-click="mostrarPatrocinan()" class="caja_menu">
+                    <i class="fa fa-handshake-o" aria-hidden="true"></i>
+                    <spam>{{translateView('FORUM-MENU-PATROCINIO')}}</spam>
+                </div>
+                <div ng-click="mostrarAgenda()" class="caja_menu">
+                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                    <spam>{{translateView('FORUM-MENU-AGENDA')}}</spam>
+                </div>
+                <div ng-click="mostrarMinisite()" class="caja_menu">
+                    <i class="fa fa-window-restore" aria-hidden="true"></i>
+                    <spam>{{translateView('FORUM-MENU-MINISITE')}}</spam>
+                </div>
+            </div>
+
+		</div>
+    </ion-content>
+    <ion-footer-bar class="hide-on-keyboard-open">
+        <div class="pie interiores"></div>
+    </ion-footer-bar>
+</ion-view>

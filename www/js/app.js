@@ -6,7 +6,7 @@
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 
-    'onezone-datepicker',
+    'ngCordova',
     'starter.controllers',
     'starter.services'])
 .run(function($ionicPlatform) {
@@ -30,129 +30,84 @@ angular.module('starter', ['ionic',
   // Each state's controller can be found in controllers.js
   $stateProvider
   // Each tab has its own nav history stack:
-  .state('login', {
-    url: '/login',
-    templateUrl: 'templates/login.html',
-    controller: 'LoginCtrl'
-  })
-  .state('novedades', {
-    url: '/novedades',
-    templateUrl: 'templates/novedades.html',
-    controller: 'NovedadesCtrl'
-  })
   .state('menu', {
     url: '/menu',
     templateUrl: 'templates/menu.html',
     controller: 'MenuCtrl'
   })
-  .state('servicios', {
-    url: '/servicios',
-    templateUrl: 'templates/servicios.html',
-    controller: 'ServiciosCtrl'
+  .state('eventos', {
+    url: '/eventos',
+    templateUrl: 'templates/eventos.html',
+    controller: 'EventosCtrl'
   })
-  .state('servicio-tren', {
-    url: '/servicio-tren',
-    templateUrl: 'templates/servicio-tren.html',
-    controller: 'ServicioTrenCtrl'
+  .state('eventos-destacados', {
+    url: '/eventos-destacados',
+    templateUrl: 'templates/eventos-destacados.html',
+    controller: 'EventosDestacadosCtrl'
   })
-  .state('servicio-tren-mostrar', {
-    url: '/servicio-tren-mostrar',
-    templateUrl: 'templates/servicio-tren-mostrar.html',
-    controller: 'ServicioTrenMostrarCtrl'
+  .state('eventos-proximos', {
+    url: '/eventos-proximos',
+    templateUrl: 'templates/eventos-proximos.html',
+    controller: 'EventosProximosCtrl'
   })
-  .state('servicio-meteo', {
-    url: '/servicio-meteo',
-    templateUrl: 'templates/servicio-meteo.html',
-    controller: 'ServicioMeteoCtrl'
+  .state('eventos-historicos', {
+    url: '/eventos-historicos',
+    templateUrl: 'templates/eventos-historicos.html',
+    controller: 'EventosHistoricosCtrl'
   })
-  .state('servicio-carretera', {
-    url: '/servicio-carretera',
-    templateUrl: 'templates/servicio-carretera.html',
-    controller: 'ServicioCarreteraCtrl'
+  .state('eventos-seleccionar-historicos', {
+    url: '/eventos-seleccionar-historicos',
+    templateUrl: 'templates/eventos-seleccionar-historicos.html',
+    controller: 'EventosHistoricosCtrl'
   })
-  .state('servicio-carta', {
-    url: '/servicio-carta',
-    templateUrl: 'templates/servicio-carta.html',
-    controller: 'ServicioCartaCtrl'
+  .state('eventos-vista', {
+    url: '/eventos-vista',
+    templateUrl: 'templates/eventos-vista.html',
+    controller: 'EventosVistaCtrl'
   })
-  .state('servicio-padel', {
-    url: '/servicio-padel',
-    templateUrl: 'templates/servicio-padel.html',
-    controller: 'ServicioPadelCtrl'
+  .state('calendario', {
+    url: '/calendario',
+    templateUrl: 'templates/calendario.html',
+    controller: 'CalendarioCtrl'
   })
-  .state('servicio-encuestas', {
-    url: '/servicio-encuestas',
-    templateUrl: 'templates/servicio-encuestas.html',
-    controller: 'ServicioEncuestasCtrl'
+  .state('calendario-mostrar', {
+    url: '/calendario-mostrar',
+    templateUrl: 'templates/calendario-mostrar.html',
+    controller: 'CalendarioMostrarCtrl'
   })
-  .state('servicio-encuesta-votar', {
-    url: '/servicio-encuesta-votar',
-    templateUrl: 'templates/servicio-encuesta-votar.html',
-    controller: 'ServicioEncuestasVotarCtrl'
+  .state('forum', {
+    url: '/forum',
+    templateUrl: 'templates/forum.html',
+    controller: 'ForumCtrl'
   })
-  .state('servicio-encuesta-ver', {
-    url: '/servicio-encuesta-ver',
-    templateUrl: 'templates/servicio-encuesta-ver.html',
-    controller: 'ServicioEncuestasVerCtrl'
+  .state('sesiones-magistrales', {
+    url: '/sesiones-magistrales',
+    templateUrl: 'templates/sesiones-magistrales.html',
+    controller: 'SesionesMagistralesCtrl'
   })
-  .state('servicio-iglesia', {
-    url: '/servicio-iglesia',
-    templateUrl: 'templates/servicio-iglesia.html',
-    controller: 'ServicioIglesiaCtrl'
+  .state('sesiones-paralelas', {
+    url: '/sesiones-paralelas',
+    templateUrl: 'templates/sesiones-paralelas.html',
+    controller: 'SesionesParalelasCtrl'
   })
-  .state('servicio-telefonos', {
-    url: '/servicio-telefonos',
-    templateUrl: 'templates/servicio-telefonos.html',
-    controller: 'ServicioTelefonosCtrl'
+  .state('sesiones-demo', {
+    url: '/sesiones-demo',
+    templateUrl: 'templates/sesiones-demo.html',
+    controller: 'SesionesDemoCtrl'
   })
-  .state('fiestas', {
-    url: '/fiestas',
-    templateUrl: 'templates/fiestas.html',
-    controller: 'FiestasCtrl'
+  .state('sesiones-sap', {
+    url: '/sesiones-sap',
+    templateUrl: 'templates/sesiones-sap.html',
+    controller: 'SesionesSapCtrl'
   })
-  .state('anuncios', {
-    url: '/anuncios',
-    templateUrl: 'templates/anuncios.html',
-    controller: 'AnunciosCtrl'
-  })
-  .state('mostrar-anuncios', {
-    url: '/mostrar-anuncios',
-    templateUrl: 'templates/mostrar-anuncios.html',
-    controller: 'MostrarAnunciosCtrl'
-  })
-  .state('boletines', {
-    url: '/boletines',
-    templateUrl: 'templates/boletines.html',
-    controller: 'BoletinesCtrl'
-  })
-  .state('mostrar-boletines', {
-    url: '/mostrar-boletines',
-    templateUrl: 'templates/mostrar-boletines.html',
-    controller: 'MostrarBoletinesCtrl'
-  })
-  .state('hemeroteca', {
-    url: '/hemeroteca',
-    templateUrl: 'templates/hemeroteca.html',
-    controller: 'HemerotecaCtrl'
-  })
-  .state('condiciones-legales', {
-    url: '/condiciones-legales',
-    templateUrl: 'templates/condiciones-legales.html',
-    controller: 'CondicionesLegalesCtrl'
-  })
-  .state('recover-passwd', {
-    url: '/recover-passwd',
-    templateUrl: 'templates/recover-passwd.html',
-    controller: 'RecoverPasswdCtrl'
-  })
-  .state('solicitud-alta', {
-    url: '/solicitud-alta',
-    templateUrl: 'templates/solicitud-alta.html',
-    controller: 'SolicitudAltaCtrl'
+  .state('sesiones-empleo', {
+    url: '/sesiones-empleo',
+    templateUrl: 'templates/sesiones-empleo.html',
+    controller: 'SesionesEmpleoCtrl'
   })
   ;
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/login');
+  $urlRouterProvider.otherwise('/menu');
 
 });

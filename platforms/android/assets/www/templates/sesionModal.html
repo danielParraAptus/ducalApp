@@ -1,0 +1,15 @@
+
+<ion-modal-view class="modalTransparencia">
+    <ion-content class="padding modalVista">
+        <center><img src="{{imagenSesion}}"/></center>
+        <center><h3>{{tituloSesion}}</h3></center>
+        <ion-list>
+            <div class="onlytopborder" ng-repeat="enlace in enlaces" ng-if="enlace.tituloEnlace && enlace.enlaceEnlace" ng-click="verEnlace(enlace.enlaceEnlace)"> 
+                <p>{{enlace.tituloEnlace}}</p>
+                <i class="fa fa-caret-right" aria-hidden="true"></i>
+            </div>
+        </ion-list>
+        <center><p>{{noDataModal}}</p></center>
+        <button class="boton_menu_modal" ng-click="cerrarModal()">{{translateView('CLOSE-BUTTON')}}</button>
+    </ion-content>
+</ion-modal-view>

@@ -10,9 +10,6 @@
         "cordova-plugin-console": {
             "PACKAGE_NAME": "com.ionicframework.starter"
         },
-        "cordova-plugin-device": {
-            "PACKAGE_NAME": "com.ionicframework.starter"
-        },
         "cordova-plugin-splashscreen": {
             "PACKAGE_NAME": "com.ionicframework.starter"
         },
@@ -26,15 +23,25 @@
             "PACKAGE_NAME": "com.ionicframework.starter"
         },
         "cordova-plugin-http": {
-            "PACKAGE_NAME": "com.ionicframework.ducalapp2932257"
+            "PACKAGE_NAME": "com.ionicframework.ausapeapp2932257"
+        },
+        "cordova-plugin-inappbrowser": {
+            "PACKAGE_NAME": "com.ionicframework.AusapeApp"
+        },
+        "cordova-plugin-calendar": {
+            "CALENDAR_USAGE_DESCRIPTION": " ",
+            "PACKAGE_NAME": "com.ionicframework.AusapeApp"
+        },
+        "cordova-plugin-device": {
+            "PACKAGE_NAME": "com.ionicframework.AusapeApp"
         }
     },
     "dependent_plugins": {
         "cordova-plugin-compat": {
-            "PACKAGE_NAME": "com.ionicframework.ducalapp2932257"
+            "PACKAGE_NAME": "com.ionicframework.ausapeapp2932257"
         },
         "cordova-plugin-file": {
-            "PACKAGE_NAME": "com.ionicframework.ducalapp2932257"
+            "PACKAGE_NAME": "com.ionicframework.ausapeapp2932257"
         }
     }
 }
